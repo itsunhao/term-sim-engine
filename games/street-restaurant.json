@@ -1,0 +1,2162 @@
+{
+ "id": "street-restaurant",
+ "name": "街角饭馆",
+ "version": "1.11.0",
+ "description": "接手街角一家苍蝇馆子：备菜进货、定价、装修、贷款，应对四季与天气，把破旧小馆做成街角食府。玩法：每日晨报、限时促销、爆款热卖、成就、NPC 社交、外卖平台。现实 1 秒 = 游戏 1 分钟，营业时段 06:00-24:00。目标：第 3 年结束前净资产达到 30,000 元。",
+ "author": "TermSim Engine",
+ "icon": "🍚",
+ "meta": {
+  "currency": "元",
+  "start_cash": 1200.0,
+  "start_reputation": 20,
+  "max_reputation": 100,
+  "days_per_season": 7,
+  "start_season": "spring",
+  "base_foot_traffic": 15,
+  "price_min": 0.6,
+  "price_max": 2.5,
+  "default_price_multiplier": 1.0,
+  "debt_limit": 20000.0,
+  "loan_grace_days": 7,
+  "bank_annual_rate": 0.12
+ },
+ "seasons": [
+  {
+   "id": "spring",
+   "name": "春",
+   "icon": "🌱",
+   "foot_traffic_modifier": 1.05,
+   "description": "万物复苏，春笋野菜上市，时令小菜最受欢迎。",
+   "demand": {}
+  },
+  {
+   "id": "summer",
+   "name": "夏",
+   "icon": "☀️",
+   "foot_traffic_modifier": 1.1,
+   "description": "烈日炎炎，凉菜凉面酸梅汤最好卖。",
+   "demand": {}
+  },
+  {
+   "id": "autumn",
+   "name": "秋",
+   "icon": "🍂",
+   "foot_traffic_modifier": 1.0,
+   "description": "秋高气爽，贴秋膘的人多了起来。",
+   "demand": {}
+  },
+  {
+   "id": "winter",
+   "name": "冬",
+   "icon": "❄️",
+   "foot_traffic_modifier": 0.85,
+   "description": "寒风刺骨，热汤热菜最受欢迎。",
+   "demand": {}
+  }
+ ],
+ "weathers": [
+  {
+   "id": "sunny",
+   "name": "晴",
+   "icon": "☀️",
+   "season_weight": {
+    "spring": 30,
+    "summer": 35,
+    "autumn": 30,
+    "winter": 20
+   },
+   "foot_traffic_modifier": 1.0,
+   "flavor": "阳光正好，适合下馆子。",
+   "demand": {}
+  },
+  {
+   "id": "cloudy",
+   "name": "多云",
+   "icon": "☁️",
+   "season_weight": {
+    "spring": 25,
+    "summer": 20,
+    "autumn": 25,
+    "winter": 25
+   },
+   "foot_traffic_modifier": 1.0,
+   "flavor": "云层有点厚，客人不多不少。",
+   "demand": {}
+  },
+  {
+   "id": "rain",
+   "name": "雨",
+   "icon": "🌧️",
+   "season_weight": {
+    "spring": 20,
+    "summer": 15,
+    "autumn": 20,
+    "winter": 10
+   },
+   "foot_traffic_modifier": 0.85,
+   "flavor": "雨点敲着屋檐，客人想喝口热乎的。",
+   "demand": {
+    "beef_noodle": 1.4,
+    "plain_noodle": 1.5,
+    "hot_sour_soup": 1.5,
+    "clay_pot_tofu": 1.3
+   }
+  },
+  {
+   "id": "wind",
+   "name": "大风",
+   "icon": "🌬️",
+   "season_weight": {
+    "spring": 10,
+    "summer": 5,
+    "autumn": 15,
+    "winter": 10
+   },
+   "foot_traffic_modifier": 0.85,
+   "flavor": "大风天，行人裹紧衣领匆匆走过。",
+   "demand": {}
+  },
+  {
+   "id": "hot",
+   "name": "酷暑",
+   "icon": "🌡️",
+   "season_weight": {
+    "spring": 0,
+    "summer": 25,
+    "autumn": 0,
+    "winter": 0
+   },
+   "foot_traffic_modifier": 0.9,
+   "flavor": "热浪滚滚，大家都想整点凉快的。",
+   "demand": {
+    "cold_noodle": 2.5,
+    "cucumber": 2.2,
+    "wood_ear": 1.8,
+    "plum_juice": 2.6,
+    "mung_soup": 2.4
+   }
+  },
+  {
+   "id": "snow",
+   "name": "雪",
+   "icon": "❄️",
+   "season_weight": {
+    "spring": 0,
+    "summer": 0,
+    "autumn": 0,
+    "winter": 30
+   },
+   "foot_traffic_modifier": 0.75,
+   "flavor": "雪花飘落，门口的行人缩着脖子往店里钻。",
+   "demand": {
+    "beef_noodle": 1.8,
+    "plain_noodle": 1.6,
+    "clay_pot_tofu": 1.7,
+    "hot_sour_soup": 1.5,
+    "spicy_fish": 1.6
+   }
+  },
+  {
+   "id": "coldwave",
+   "name": "寒潮",
+   "icon": "🥶",
+   "season_weight": {
+    "spring": 0,
+    "summer": 0,
+    "autumn": 0,
+    "winter": 15
+   },
+   "foot_traffic_modifier": 0.7,
+   "flavor": "寒潮来袭，滴水成冰，热乎的硬菜最抢手。",
+   "demand": {
+    "beef_noodle": 1.8,
+    "clay_pot_tofu": 1.8,
+    "braised_pork": 1.6,
+    "spicy_fish": 1.7,
+    "hot_sour_soup": 1.6
+   }
+  }
+ ],
+ "products": [
+  {
+   "id": "rice",
+   "name": "米饭",
+   "category": "主食",
+   "icon": "🍚",
+   "wholesale_price": 1.5,
+   "base_retail_price": 3.0,
+   "popularity": 95,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "fried_rice",
+   "name": "蛋炒饭",
+   "category": "主食",
+   "icon": "🍛",
+   "wholesale_price": 4.0,
+   "base_retail_price": 12.0,
+   "popularity": 85,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.2
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "beef_noodle",
+   "name": "牛肉面",
+   "category": "主食",
+   "icon": "🍜",
+   "wholesale_price": 6.0,
+   "base_retail_price": 15.0,
+   "popularity": 90,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.6
+   },
+   "weather_demand": {
+    "rain": 1.4,
+    "snow": 1.8,
+    "coldwave": 1.8
+   }
+  },
+  {
+   "id": "plain_noodle",
+   "name": "阳春面",
+   "category": "主食",
+   "icon": "🍝",
+   "wholesale_price": 3.5,
+   "base_retail_price": 10.0,
+   "popularity": 78,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.4
+   },
+   "weather_demand": {
+    "rain": 1.5,
+    "snow": 1.6
+   }
+  },
+  {
+   "id": "cold_noodle",
+   "name": "凉面",
+   "category": "主食",
+   "icon": "🥢",
+   "wholesale_price": 3.5,
+   "base_retail_price": 10.0,
+   "popularity": 82,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 2.0
+   },
+   "weather_demand": {
+    "hot": 2.5
+   }
+  },
+  {
+   "id": "cucumber",
+   "name": "拍黄瓜",
+   "category": "凉菜",
+   "icon": "🥒",
+   "wholesale_price": 2.0,
+   "base_retail_price": 6.0,
+   "popularity": 65,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.6
+   },
+   "weather_demand": {
+    "hot": 2.0
+   }
+  },
+  {
+   "id": "wood_ear",
+   "name": "凉拌木耳",
+   "category": "凉菜",
+   "icon": "🥗",
+   "wholesale_price": 2.5,
+   "base_retail_price": 8.0,
+   "popularity": 60,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.4
+   },
+   "weather_demand": {
+    "hot": 1.8
+   }
+  },
+  {
+   "id": "tomato_egg",
+   "name": "番茄炒蛋",
+   "category": "热菜",
+   "icon": "🍅",
+   "wholesale_price": 3.5,
+   "base_retail_price": 11.0,
+   "popularity": 80,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.2
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "home_tofu",
+   "name": "家常豆腐",
+   "category": "热菜",
+   "icon": "🍽️",
+   "wholesale_price": 4.0,
+   "base_retail_price": 12.0,
+   "popularity": 72,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "plum_juice",
+   "name": "酸梅汤",
+   "category": "饮品",
+   "icon": "🍹",
+   "wholesale_price": 2.0,
+   "base_retail_price": 6.0,
+   "popularity": 75,
+   "shelf_life_days": 3,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 2.2
+   },
+   "weather_demand": {
+    "hot": 2.6
+   }
+  },
+  {
+   "id": "mung_soup",
+   "name": "绿豆汤",
+   "category": "饮品",
+   "icon": "🫘",
+   "wholesale_price": 2.0,
+   "base_retail_price": 6.0,
+   "popularity": 70,
+   "shelf_life_days": 2,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 2.0
+   },
+   "weather_demand": {
+    "hot": 2.4
+   }
+  },
+  {
+   "id": "soy_milk",
+   "name": "豆浆",
+   "category": "饮品",
+   "icon": "🥛",
+   "wholesale_price": 1.5,
+   "base_retail_price": 5.0,
+   "popularity": 68,
+   "shelf_life_days": 2,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "spring": 1.3,
+    "winter": 1.3
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "seaweed_soup",
+   "name": "紫菜蛋花汤",
+   "category": "汤品",
+   "icon": "🥣",
+   "wholesale_price": 2.0,
+   "base_retail_price": 7.0,
+   "popularity": 65,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv2",
+   "season_demand": {
+    "winter": 1.3
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "hot_sour_soup",
+   "name": "酸辣汤",
+   "category": "汤品",
+   "icon": "🍵",
+   "wholesale_price": 2.5,
+   "base_retail_price": 8.0,
+   "popularity": 70,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv2",
+   "season_demand": {
+    "winter": 1.4
+   },
+   "weather_demand": {
+    "rain": 1.5,
+    "snow": 1.5,
+    "coldwave": 1.6
+   }
+  },
+  {
+   "id": "clay_pot_tofu",
+   "name": "砂锅豆腐",
+   "category": "汤品",
+   "icon": "🍲",
+   "wholesale_price": 5.0,
+   "base_retail_price": 14.0,
+   "popularity": 68,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv2",
+   "season_demand": {
+    "winter": 1.5
+   },
+   "weather_demand": {
+    "rain": 1.3,
+    "snow": 1.7,
+    "coldwave": 1.8
+   }
+  },
+  {
+   "id": "braised_pork",
+   "name": "红烧肉",
+   "category": "招牌菜",
+   "icon": "🥘",
+   "wholesale_price": 8.0,
+   "base_retail_price": 22.0,
+   "popularity": 85,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv3",
+   "season_demand": {
+    "winter": 1.5
+   },
+   "weather_demand": {
+    "coldwave": 1.6
+   }
+  },
+  {
+   "id": "sweet_sour_ribs",
+   "name": "糖醋里脊",
+   "category": "招牌菜",
+   "icon": "🍖",
+   "wholesale_price": 7.0,
+   "base_retail_price": 20.0,
+   "popularity": 78,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv3",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "kungpao_chicken",
+   "name": "宫保鸡丁",
+   "category": "招牌菜",
+   "icon": "🍗",
+   "wholesale_price": 6.0,
+   "base_retail_price": 18.0,
+   "popularity": 80,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv3",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "fish_head",
+   "name": "剁椒鱼头",
+   "category": "硬菜",
+   "icon": "🐡",
+   "wholesale_price": 12.0,
+   "base_retail_price": 32.0,
+   "popularity": 70,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv4",
+   "season_demand": {
+    "winter": 1.2
+   },
+   "weather_demand": {
+    "coldwave": 1.3
+   }
+  },
+  {
+   "id": "braised_ribs",
+   "name": "红烧排骨",
+   "category": "硬菜",
+   "icon": "🦴",
+   "wholesale_price": 10.0,
+   "base_retail_price": 28.0,
+   "popularity": 75,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv4",
+   "season_demand": {
+    "winter": 1.3
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "spicy_fish",
+   "name": "水煮鱼",
+   "category": "硬菜",
+   "icon": "🌶️",
+   "wholesale_price": 11.0,
+   "base_retail_price": 30.0,
+   "popularity": 72,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv4",
+   "season_demand": {
+    "winter": 1.5
+   },
+   "weather_demand": {
+    "snow": 1.6,
+    "coldwave": 1.7
+   }
+  },
+  {
+   "id": "squirrel_fish",
+   "name": "松鼠桂鱼",
+   "category": "宴席菜",
+   "icon": "🐠",
+   "wholesale_price": 15.0,
+   "base_retail_price": 42.0,
+   "popularity": 65,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv6",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "dongpo_elbow",
+   "name": "东坡肘子",
+   "category": "宴席菜",
+   "icon": "🥩",
+   "wholesale_price": 13.0,
+   "base_retail_price": 38.0,
+   "popularity": 68,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv6",
+   "season_demand": {
+    "winter": 1.4
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "steamed_bass",
+   "name": "清蒸鲈鱼",
+   "category": "宴席菜",
+   "icon": "🐟",
+   "wholesale_price": 14.0,
+   "base_retail_price": 40.0,
+   "popularity": 66,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_lv6",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "roast_goose",
+   "name": "秘制烧鹅",
+   "category": "招牌菜",
+   "icon": "🦢",
+   "wholesale_price": 12.0,
+   "base_retail_price": 38.0,
+   "popularity": 85,
+   "shelf_life_days": 3,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.5
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "truffle_rice",
+   "name": "黑松露炒饭",
+   "category": "招牌菜",
+   "icon": "🍚",
+   "wholesale_price": 10.0,
+   "base_retail_price": 28.0,
+   "popularity": 75,
+   "shelf_life_days": 2,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  }
+ ],
+ "npcs": [
+  {
+   "id": "npc_wang",
+   "name": "王大爷",
+   "icon": "🧓",
+   "title": "退休老食客",
+   "personality": "节俭",
+   "visit_chance": 0.3,
+   "price_sensitivity": 0.85,
+   "period": "any",
+   "favorite_categories": [
+    "主食",
+    "凉菜"
+   ],
+   "favorite_products": [
+    "plain_noodle",
+    "cucumber"
+   ],
+   "budget": 15.0,
+   "comments": {
+    "cold": [
+     "这馆子，看着就不像能做出好菜的样子。",
+     "一碗面卖这个价？再便宜点呗。",
+     "店里冷冷清清的。"
+    ],
+    "normal": [
+     "还行，凑合吃一口。",
+     "味道可以，就是贵了点。",
+     "老板，份量可别缩水啊。"
+    ],
+    "regular": [
+     "每天不来你家吃碗面，浑身不得劲。",
+     "你这儿的面，我吃得放心。",
+     "今天来碗阳春面，加个拍黄瓜！"
+    ],
+    "loyal": [
+     "这条街就数你这馆子最实在！",
+     "老板厚道，我帮你跟老伙计们说道说道！",
+     "退休金一半都花你这儿了，值！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "阳春面又没了？我这胃就认它！",
+     "拍黄瓜都没有，大热天吃啥哟！",
+     "下次记得给我留碗面！"
+    ]
+   }
+  },
+  {
+   "id": "npc_li",
+   "name": "李姐",
+   "icon": "👩",
+   "title": "隔壁主妇",
+   "personality": "热心",
+   "visit_chance": 0.25,
+   "price_sensitivity": 0.6,
+   "period": "noon",
+   "favorite_categories": [
+    "热菜",
+    "汤品"
+   ],
+   "favorite_products": [
+    "tomato_egg",
+    "seaweed_soup"
+   ],
+   "budget": 25.0,
+   "comments": {
+    "cold": [
+     "路过看看，菜色不咋地。",
+     "你这家店什么时候开的？",
+     "孩子不爱吃这里的菜。"
+    ],
+    "normal": [
+     "还行，就是选择少了点。",
+     "帮我打包一份番茄炒蛋。",
+     "汤类再多几样就好了。"
+    ],
+    "regular": [
+     "中午懒得做饭就来你这儿！",
+     "街坊们都夸你家干净。",
+     "你家菜比我做的还香！"
+    ],
+    "loyal": [
+     "我逢人就推荐你家！",
+     "这条街就属你家最像样！",
+     "孩子就认你家番茄炒蛋！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "番茄炒蛋卖完了？孩子正闹着要吃呢！",
+     "紫菜蛋花汤没了？再来碗清淡的呗！"
+    ]
+   }
+  },
+  {
+   "id": "npc_xiaobao",
+   "name": "李小宝",
+   "icon": "🧒",
+   "title": "小学生",
+   "personality": "贪吃",
+   "visit_chance": 0.28,
+   "price_sensitivity": 0.7,
+   "period": "noon",
+   "favorite_categories": [
+    "主食",
+    "饮品"
+   ],
+   "favorite_products": [
+    "fried_rice",
+    "mung_soup"
+   ],
+   "budget": 10.0,
+   "comments": {
+    "cold": [
+     "没我爱吃的……",
+     "老板，有没有新菜？",
+     "蛋炒饭贵了，我零花钱不够！"
+    ],
+    "normal": [
+     "还行吧，来份蛋炒饭。",
+     "绿豆汤有没有？",
+     "能多加个蛋吗？"
+    ],
+    "regular": [
+     "老板我放学就来！",
+     "同学都说你家炒饭香！",
+     "今天考了满分，来份蛋炒饭庆祝！"
+    ],
+    "loyal": [
+     "全班同学都来你家吃饭！",
+     "老板你最好了！",
+     "我妈都说让我别老来蹭饭！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "蛋炒饭没了？！我午饭咋办！",
+     "绿豆汤都没有，不开心！",
+     "怎么又卖完了，跑了两趟了！"
+    ]
+   }
+  },
+  {
+   "id": "npc_chen",
+   "name": "陈经理",
+   "icon": "🧑‍💼",
+   "title": "上班族",
+   "personality": "讲究",
+   "visit_chance": 0.22,
+   "price_sensitivity": 0.4,
+   "period": "evening",
+   "favorite_categories": [
+    "招牌菜",
+    "硬菜"
+   ],
+   "favorite_products": [
+    "braised_pork",
+    "sweet_sour_ribs"
+   ],
+   "budget": 50.0,
+   "comments": {
+    "cold": [
+     "店面有点寒酸啊。",
+     "这环境，谈事不太体面。",
+     "菜品看着不上档次。"
+    ],
+    "normal": [
+     "还行，能下饭。",
+     "红烧肉有吗？",
+     "上菜再快点就好了。"
+    ],
+    "regular": [
+     "下班顺路就来你家加个菜。",
+     "你家硬菜做得真不错。",
+     "环境是越来越好了。"
+    ],
+    "loyal": [
+     "公司聚餐我都定你家！",
+     "请客户吃饭，就你家有排面！",
+     "这条街的馆子，你家第一！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "红烧肉没有？我请客户呢！",
+     "糖醋里脊断货了？明天还有应酬！"
+    ]
+   }
+  },
+  {
+   "id": "npc_liu",
+   "name": "刘奶奶",
+   "icon": "👵",
+   "title": "老街坊",
+   "personality": "恋旧",
+   "visit_chance": 0.2,
+   "price_sensitivity": 0.8,
+   "period": "morning",
+   "favorite_categories": [
+    "主食",
+    "汤品"
+   ],
+   "favorite_products": [
+    "beef_noodle",
+    "hot_sour_soup"
+   ],
+   "budget": 12.0,
+   "comments": {
+    "cold": [
+     "这馆子，没有以前那家的味道了。",
+     "菜价涨了，老太太吃不起喽。",
+     "面汤不够浓。"
+    ],
+    "normal": [
+     "有热乎的牛肉面吗？",
+     "还行，人还算实在。",
+     "汤咸了点儿。"
+    ],
+    "regular": [
+     "每天早上下楼就来你这儿。",
+     "你这家馆子越来越像样了。",
+     "面还是你家的实在。"
+    ],
+    "loyal": [
+     "老太太就认你这儿！",
+     "街坊邻居都夸你有出息！",
+     "我这把年纪，就爱吃你家一口热乎的！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "牛肉面又卖完了？我还没吃早饭呢！",
+     "酸辣汤没有，那砂锅豆腐呢？",
+     "下次一定给我留碗面啊！"
+    ]
+   }
+  },
+  {
+   "id": "npc_zhao",
+   "name": "赵师傅",
+   "icon": "🚕",
+   "title": "出租车司机",
+   "personality": "爽快",
+   "visit_chance": 0.25,
+   "price_sensitivity": 0.5,
+   "period": "evening",
+   "favorite_categories": [
+    "热菜",
+    "主食"
+   ],
+   "favorite_products": [
+    "home_tofu",
+    "fried_rice"
+   ],
+   "budget": 20.0,
+   "comments": {
+    "cold": [
+     "随便垫吧一口，赶时间。",
+     "这店晚上看着有点暗。",
+     "菜凉得快。"
+    ],
+    "normal": [
+     "师傅，快点儿上，家常豆腐一份。",
+     "行，味道还凑合。",
+     "米饭管够不？"
+    ],
+    "regular": [
+     "交班前必来你家吃一顿！",
+     "你这馆子，夜班的都知道。",
+     "吃完这顿好跑夜路！"
+    ],
+    "loyal": [
+     "我拉活都跟乘客推荐你家！",
+     "老板爽快，菜也够劲儿！",
+     "半夜还开着门，就冲这点，服！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "家常豆腐没了？我这饿得前胸贴后背！",
+     "蛋炒饭缺货？夜班就指望它了！"
+    ]
+   }
+  },
+  {
+   "id": "npc_sun",
+   "name": "孙老板",
+   "icon": "🤵",
+   "title": "公司老板",
+   "personality": "阔气",
+   "visit_chance": 0.12,
+   "price_sensitivity": 0.3,
+   "period": "evening",
+   "favorite_categories": [
+    "宴席菜"
+   ],
+   "favorite_products": [
+    "squirrel_fish",
+    "steamed_bass"
+   ],
+   "budget": 120.0,
+   "comments": {
+    "cold": [
+     "就这环境，宴请客户可不行。",
+     "没有拿得出手的硬菜啊。",
+     "这家店，上不了台面。"
+    ],
+    "normal": [
+     "还行，改天再来。",
+     "有雅间吗？谈事不方便。",
+     "菜式普通了点。"
+    ],
+    "regular": [
+     "你家请客有面子了。",
+     "松鼠桂鱼做得地道！",
+     "以后客户宴请就定这儿。"
+    ],
+    "loyal": [
+     "全公司的商务宴请都给你家！",
+     "这条街，只有你家配得上我的客户！",
+     "老板，年底年会也交给你办！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "松鼠桂鱼没有？我请的可是重要客户！",
+     "清蒸鲈鱼断货？这可太扫兴了！"
+    ]
+   }
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "upg_lv2",
+   "name": "粉刷翻新",
+   "icon": "🎨",
+   "level": 2,
+   "cost": 1200.0,
+   "description": "把斑驳的墙面重新粉刷，换上暖黄灯光，桌椅擦得锃亮，小馆子顿时亮堂了。",
+   "foot_traffic_bonus": 0.15,
+   "max_customers_bonus": 5,
+   "reputation_bonus": 2,
+   "unlock_categories": [
+    "汤品"
+   ],
+   "auto_reputation_per_day": 0.0
+  },
+  {
+   "id": "upg_lv3",
+   "name": "更换桌椅",
+   "icon": "🪑",
+   "level": 3,
+   "cost": 2000.0,
+   "description": "换上结实的实木桌椅和崭新的碗碟，客人坐着舒服，翻台也快了。",
+   "foot_traffic_bonus": 0.15,
+   "max_customers_bonus": 10,
+   "reputation_bonus": 2,
+   "unlock_categories": [
+    "招牌菜"
+   ],
+   "auto_reputation_per_day": 0.0
+  },
+  {
+   "id": "upg_lv4",
+   "name": "扩建厨房",
+   "icon": "🔥",
+   "level": 4,
+   "cost": 3200.0,
+   "description": "把后厨扩大一倍，添置双灶头和蒸箱，大锅硬菜不在话下。",
+   "foot_traffic_bonus": 0.1,
+   "max_customers_bonus": 5,
+   "reputation_bonus": 3,
+   "unlock_categories": [
+    "硬菜"
+   ],
+   "auto_reputation_per_day": 0.1
+  },
+  {
+   "id": "upg_lv5",
+   "name": "门面招牌",
+   "icon": "🏮",
+   "level": 5,
+   "cost": 4500.0,
+   "description": "门口挂起红灯笼和烫金招牌，晚上远远就能看到，整条街都知道这儿有家好馆子。",
+   "foot_traffic_bonus": 0.25,
+   "max_customers_bonus": 10,
+   "reputation_bonus": 4,
+   "unlock_categories": [],
+   "auto_reputation_per_day": 0.2
+  },
+  {
+   "id": "upg_lv6",
+   "name": "隔出雅间",
+   "icon": "🚪",
+   "level": 6,
+   "cost": 6500.0,
+   "description": "把里屋隔成两间雅间，摆上大圆桌，宴请宾客也有面子。",
+   "foot_traffic_bonus": 0.15,
+   "max_customers_bonus": 15,
+   "reputation_bonus": 5,
+   "unlock_categories": [
+    "宴席菜"
+   ],
+   "auto_reputation_per_day": 0.2
+  },
+  {
+   "id": "upg_lv7",
+   "name": "庭院花园",
+   "icon": "🌸",
+   "level": 7,
+   "cost": 8500.0,
+   "description": "后院改造成花园庭院，支起遮阳伞，夏夜乘凉吃宵夜，一座难求。",
+   "foot_traffic_bonus": 0.2,
+   "max_customers_bonus": 20,
+   "reputation_bonus": 5,
+   "unlock_categories": [],
+   "auto_reputation_per_day": 0.3
+  },
+  {
+   "id": "upg_lv8",
+   "name": "旗舰食府",
+   "icon": "👑",
+   "level": 8,
+   "cost": 12000.0,
+   "description": "全面升级为街角食府：明厨亮灶、古风装潢、服务员统一制服，整条街的排面。",
+   "foot_traffic_bonus": 0.3,
+   "max_customers_bonus": 25,
+   "reputation_bonus": 8,
+   "unlock_categories": [],
+   "auto_reputation_per_day": 0.5
+  }
+ ],
+ "loans": [
+  {
+   "id": "loan_small",
+   "name": "小额周转贷",
+   "icon": "💰",
+   "max_amount": 2000.0,
+   "monthly_rate": 0.08,
+   "description": "救急不救穷。额度 2,000 元，月利率 8%，按游戏日实时计息。"
+  },
+  {
+   "id": "loan_renovation",
+   "name": "装修贷",
+   "icon": "🏦",
+   "max_amount": 6000.0,
+   "monthly_rate": 0.06,
+   "description": "店面装修专用。额度 6,000 元，月利率 6%，按游戏日实时计息。"
+  },
+  {
+   "id": "loan_big",
+   "name": "食府扩建贷",
+   "icon": "🏗️",
+   "max_amount": 12000.0,
+   "monthly_rate": 0.045,
+   "description": "大额低息，冲刺旗舰食府。额度 12,000 元，月利率 4.5%，按游戏日实时计息。"
+  }
+ ],
+ "events": [
+  {
+   "id": "ev_queue",
+   "name": "顾客排长队",
+   "icon": "🎉",
+   "chance": 0.08,
+   "flavor": "口碑传开，饭点门口排起了长队！",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 6,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_supplier",
+   "name": "食材特惠",
+   "icon": "📦",
+   "chance": 0.06,
+   "flavor": "菜市场收摊大甩卖，进货打了七折！",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 0.7,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_inspection",
+   "name": "卫生检查",
+   "icon": "🧾",
+   "chance": 0.03,
+   "flavor": "卫生检查发现后厨角落有油渍，罚款还扣了分……",
+   "cash_delta_min": -100.0,
+   "cash_delta_max": -300.0,
+   "reputation_delta": -3,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_chef_off",
+   "name": "大厨请假",
+   "icon": "👨‍🍳",
+   "chance": 0.05,
+   "flavor": "大厨临时请假，很多菜做不了，生意受了影响。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 0.6,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_foodie",
+   "name": "美食博主探店",
+   "icon": "📱",
+   "chance": 0.04,
+   "flavor": "美食博主来探店，视频一夜爆火！",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 6,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.6,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 2
+  },
+  {
+   "id": "ev_banquet",
+   "name": "邻里宴席邀请",
+   "icon": "🎎",
+   "chance": 0.03,
+   "flavor": "街坊办满月酒请你掌勺，赚了笔外快。",
+   "cash_delta_min": 150.0,
+   "cash_delta_max": 400.0,
+   "reputation_delta": 1,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_powerout",
+   "name": "突发停电",
+   "icon": "⚡",
+   "chance": 0.04,
+   "flavor": "片区停电，灶台停摆，只能卖些现成的凉菜。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 0.4,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_gas",
+   "name": "燃气检修",
+   "icon": "🛠️",
+   "chance": 0.04,
+   "flavor": "燃气管道检修，火力不足，上菜慢了不少。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 0.7,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_praise",
+   "name": "好评如潮",
+   "icon": "📣",
+   "chance": 0.05,
+   "flavor": "熟客们在点评软件上夸你家实惠又好吃。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 4,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_mouse",
+   "name": "老鼠出没",
+   "icon": "🐭",
+   "chance": 0.03,
+   "flavor": "后厨发现老鼠，被人拍了视频，声誉受损。",
+   "cash_delta_min": -80.0,
+   "cash_delta_max": -200.0,
+   "reputation_delta": -4,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_harvest",
+   "name": "时蔬丰收",
+   "icon": "🌽",
+   "chance": 0.06,
+   "flavor": "当季蔬菜大丰收，进货打到六折！",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 0.6,
+   "buff_days": 2
+  }
+ ],
+ "win": {
+  "type": "networth",
+  "target_net_worth": 30000.0,
+  "by_year": 3
+ },
+ "lose": {
+  "type": "bankruptcy",
+  "debt_limit": 20000.0,
+  "grace_days": 7
+ },
+ "gameplay": {
+  "daily_briefs": [
+   {
+    "id": "brief_food_fest",
+    "icon": "🎪",
+    "title": "美食节开幕",
+    "flavor": "街角办起了美食节，馋嘴的街坊都出来了",
+    "foot_traffic_mod": 1.2,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 2.0
+   },
+   {
+    "id": "brief_market_sale",
+    "icon": "🥬",
+    "title": "菜市场大促",
+    "flavor": "今天菜场批发价便宜，进货省一笔",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.0,
+    "restock_discount": 0.9,
+    "weight": 1.6
+   },
+   {
+    "id": "brief_foodie_viral",
+    "icon": "📱",
+    "title": "探店视频爆了",
+    "flavor": "昨晚的探店视频上了热门，今天点单特别猛",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.15,
+    "restock_discount": 1.0,
+    "weight": 1.6
+   },
+   {
+    "id": "brief_rain_warn",
+    "icon": "🌧",
+    "title": "暴雨预警",
+    "flavor": "暴雨将至，出门下馆子的人少了",
+    "foot_traffic_mod": 0.85,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 1.4
+   },
+   {
+    "id": "brief_inspection",
+    "icon": "🔍",
+    "title": "卫生抽查",
+    "flavor": "今天食药监抽查，后厨要打起精神",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 1.2
+   },
+   {
+    "id": "brief_plain",
+    "icon": "🌤",
+    "title": "平淡的一天",
+    "flavor": "和往常一样，按部就班就好",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 2.2
+   }
+  ],
+  "promo": {
+   "cost": 300,
+   "duration_min": 240,
+   "traffic_mult": 1.5
+  },
+  "hot_item": {
+   "chance": 0.35,
+   "duration_min": 180,
+   "demand_mult": 2.5
+  },
+  "social": {
+   "chat": {
+    "name": "闲聊",
+    "icon": "💬",
+    "cost": 0,
+    "favor": 1,
+    "rep": 0,
+    "cooldown_min": 30,
+    "flavor": "你陪食客们聊了会天"
+   },
+   "taste": {
+    "name": "请尝新菜",
+    "icon": "🍲",
+    "cost": 40,
+    "favor": 3,
+    "rep": 1,
+    "cooldown_min": 90,
+    "flavor": "你端出刚研发的新菜请对方试吃"
+   },
+   "dinner": {
+    "name": "请客吃饭",
+    "icon": "🍻",
+    "cost": 80,
+    "favor": 5,
+    "rep": 1,
+    "cooldown_min": 150,
+    "flavor": "你请对方搓了一顿，宾主尽欢"
+   }
+  },
+  "trade": {
+   "wholesale": {
+    "enabled": false,
+    "min_qty": 50,
+    "price_ratio": 0.75,
+    "cooldown_min": 60,
+    "broker_name": "王老板"
+   },
+   "delivery": {
+    "enabled": true,
+    "setup_cost": 500,
+    "orders_min": 6,
+    "orders_max": 12,
+    "price_ratio": 0.8,
+    "traffic_penalty": 0.15,
+    "review_chance": 0.1
+   }
+  },
+  "staff": {
+   "pay_interval_days": 30,
+   "roles": {
+    "chef": {
+     "id": "chef",
+     "name": "大厨老李",
+     "icon": "👨‍🍳",
+     "role": "auto_buy",
+     "salary": 600,
+     "desc": "每日清晨自动备菜：把解锁菜品补到 20 份（花费上限现金 40%，保底留 400）。效率越高备得越足。",
+     "auto_buy": {
+      "target_qty": 20,
+      "max_spend_ratio": 0.4,
+      "min_cash_keep": 400
+     },
+     "skills": [
+      {
+       "id": "sk_secret_recipe",
+       "name": "秘制配方",
+       "icon": "👨🍳",
+       "desc": "客单价 +3%",
+       "params": {
+        "price_bonus": 0.03
+       }
+      },
+      {
+       "id": "sk_prep_hand",
+       "name": "备菜快手",
+       "icon": "🔪",
+       "desc": "清晨自动备菜数量 +8",
+       "params": {
+        "auto_buy_bonus": 8
+       }
+      }
+     ]
+    },
+    "runner": {
+     "id": "runner",
+     "name": "骑手小赵",
+     "icon": "🛵",
+     "role": "runner",
+     "salary": 450,
+     "desc": "跑腿飞快，外卖每日单量 +2/级效率，风里雨里准时达。",
+     "params": {
+      "delivery_orders": 2
+     },
+     "skills": [
+      {
+       "id": "sk_speed_rider",
+       "name": "风驰电掣",
+       "icon": "🛵",
+       "desc": "外卖每日单量 +2",
+       "params": {
+        "delivery_bonus": 2
+       }
+      },
+      {
+       "id": "sk_good_review",
+       "name": "好评引导",
+       "icon": "⭐",
+       "desc": "外卖好评概率 +8%",
+       "params": {
+        "review_bonus": 0.08
+       }
+      }
+     ]
+    },
+    "manager": {
+     "id": "manager",
+     "name": "店长阿芳",
+     "icon": "👩‍💼",
+     "role": "manager",
+     "salary": 550,
+     "desc": "严把出品与包装，外卖好评概率 +10%/级效率。",
+     "params": {
+      "review_bonus": 0.1
+     },
+     "skills": [
+      {
+       "id": "sk_manage",
+       "name": "管理有道",
+       "icon": "📋",
+       "desc": "全员效率 +3%（店长光环）",
+       "params": {
+        "efficiency_bonus": 0.03
+       }
+      },
+      {
+       "id": "sk_traffic_boss",
+       "name": "客流操盘",
+       "icon": "📈",
+       "desc": "客流 +3%",
+       "params": {
+        "traffic_bonus": 0.03
+       }
+      }
+     ]
+    },
+    "cleaner": {
+     "id": "cleaner",
+     "name": "保洁阿霞",
+     "icon": "🧹",
+     "role": "cleaner",
+     "salary": 300,
+     "desc": "里外打扫得干净，卫生抽查与鼠患事件概率减半（强度 50%）。",
+     "suppress_events": [
+      "ev_inspection",
+      "ev_mouse"
+     ],
+     "params": {
+      "suppress_strength": 0.5
+     },
+     "skills": [
+      {
+       "id": "sk_spotless",
+       "name": "一尘不染",
+       "icon": "✨",
+       "desc": "卫生/鼠患事件抑制额外 +40%",
+       "params": {
+        "suppress_bonus": 0.4
+       }
+      },
+      {
+       "id": "sk_hygiene",
+       "name": "卫生标兵",
+       "icon": "🧼",
+       "desc": "外卖好评概率 +5%",
+       "params": {
+        "review_bonus": 0.05
+       }
+      }
+     ]
+    },
+    "prep": {
+     "name": "备菜快手阿强",
+     "icon": "🍳",
+     "role": "realtime_restock",
+     "salary": 800,
+     "desc": "后厨盯盘：食材一断立刻补 10 份（按批发价入账），效率越高手越快。",
+     "autoBuy": {
+      "target_qty": 10,
+      "max_spend_ratio": 0.6,
+      "min_cash_keep": 300
+     },
+     "skills": [
+      {
+       "id": "sk_flash_prep",
+       "name": "闪电补货",
+       "icon": "⚡",
+       "desc": "实时补货数量 +5",
+       "params": {
+        "stock_bonus": 5
+       }
+      },
+      {
+       "id": "sk_frugal_chef",
+       "name": "精打细算",
+       "icon": "🧮",
+       "desc": "进货再让价 3%",
+       "params": {
+        "discount_bonus": 0.03
+       }
+      }
+     ]
+    }
+   },
+   "career": {
+    "enabled": true,
+    "exp_per_day": 5,
+    "exp_per_action": 1,
+    "level_threshold": 50,
+    "promote_cost_mult": 3.0,
+    "redpacket_cost": 200.0,
+    "loyalty_per_pay": 5,
+    "loyalty_per_raise": 8,
+    "loyalty_per_cut": -10,
+    "loyalty_promote_cost": 10.0
+   }
+  },
+  "quest": {
+   "chance": 0.6,
+   "days": 2,
+   "qty_min": 5,
+   "qty_max": 12,
+   "reward_ratio": 1.4
+  },
+  "lottery": {
+   "cost": 15,
+   "win_chance": 0.08,
+   "prize_min": 80,
+   "prize_max": 300,
+   "scratch_cost": 8,
+   "scratch_win_chance": 0.3,
+   "scratch_prize_min": 5,
+   "scratch_prize_max": 80
+  },
+  "map": {
+   "start_location_id": "cangying",
+   "locations": [
+    {
+     "id": "cangying",
+     "name": "苍蝇馆子",
+     "icon": "🍜",
+     "desc": "巷子里的老味道，桌椅不多但食客都念着这一口。初始店面。",
+     "traffic_bonus": 1.0,
+     "price": 0,
+     "down_payment_ratio": 0,
+     "unlock_reputation": 0
+    },
+    {
+     "id": "linshi",
+     "name": "临街食铺",
+     "icon": "🍲",
+     "desc": "临街的食铺，门口能摆几张桌子，路过的人流翻倍。",
+     "traffic_bonus": 1.25,
+     "price": 8000,
+     "down_payment_ratio": 0.4,
+     "unlock_reputation": 30
+    },
+    {
+     "id": "meishijie",
+     "name": "美食街店面",
+     "icon": "🍱",
+     "desc": "美食街正店面，毗邻电影院和商场，晚餐时段一座难求。",
+     "traffic_bonus": 1.55,
+     "price": 22000,
+     "down_payment_ratio": 0.35,
+     "unlock_reputation": 60
+    },
+    {
+     "id": "zhongxin",
+     "name": "市中心旗舰",
+     "icon": "🏯",
+     "desc": "市中心旗舰食府，三层楼面宴客不断——餐饮人的终极目标。",
+     "traffic_bonus": 1.9,
+     "price": 55000,
+     "down_payment_ratio": 0.3,
+     "unlock_reputation": 80
+    }
+   ],
+   "loan": {
+    "months": 12,
+    "monthly_rate": 0.02
+   }
+  },
+  "wardrobe": {
+   "slots": [
+    "hat",
+    "top",
+    "pants",
+    "watch",
+    "shoes"
+   ],
+   "items": [
+    {
+     "id": "hat_plain",
+     "name": "棉布帽",
+     "brand": "街坊工坊",
+     "icon": "🧢",
+     "slot": "hat",
+     "price": 96,
+     "prestige": 2,
+     "desc": "朴实耐用，街坊都认得这顶帽子。"
+    },
+    {
+     "id": "hat_cap",
+     "name": "潮款鸭舌帽",
+     "brand": "小林制衣",
+     "icon": "🧢",
+     "slot": "hat",
+     "price": 360,
+     "prestige": 6,
+     "desc": "限量配色，年轻人都在追。"
+    },
+    {
+     "id": "hat_top",
+     "name": "高顶礼帽",
+     "brand": "奥罗拉",
+     "icon": "🎩",
+     "slot": "hat",
+     "price": 1440,
+     "prestige": 15,
+     "desc": "一顶礼帽，半条街的目光。"
+    },
+    {
+     "id": "top_tee",
+     "name": "棉质T恤",
+     "brand": "街坊工坊",
+     "icon": "👕",
+     "slot": "top",
+     "price": 120,
+     "prestige": 2,
+     "desc": "纯棉透气，干活利索。"
+    },
+    {
+     "id": "top_jacket",
+     "name": "皮夹克",
+     "brand": "小林制衣",
+     "icon": "🧥",
+     "slot": "top",
+     "price": 480,
+     "prestige": 8,
+     "desc": "一身皮衣，气场两米八。"
+    },
+    {
+     "id": "top_suit",
+     "name": "定制西装",
+     "brand": "菲尼克斯",
+     "icon": "🤵",
+     "slot": "top",
+     "price": 2600,
+     "prestige": 20,
+     "desc": "量体裁剪，见客谈生意必备。"
+    },
+    {
+     "id": "pants_jean",
+     "name": "牛仔裤",
+     "brand": "街坊工坊",
+     "icon": "👖",
+     "slot": "pants",
+     "price": 144,
+     "prestige": 2,
+     "desc": "耐磨耐脏，干活首选。"
+    },
+    {
+     "id": "pants_slack",
+     "name": "休闲西裤",
+     "brand": "小林制衣",
+     "icon": "👖",
+     "slot": "pants",
+     "price": 420,
+     "prestige": 6,
+     "desc": "有型不紧绷，日常体面。"
+    },
+    {
+     "id": "pants_tailor",
+     "name": "高级定制西裤",
+     "brand": "菲尼克斯",
+     "icon": "👖",
+     "slot": "pants",
+     "price": 1950,
+     "prestige": 15,
+     "desc": "裤线笔直如刀，走路带风。"
+    },
+    {
+     "id": "watch_digi",
+     "name": "电子表",
+     "brand": "街坊工坊",
+     "icon": "⌚",
+     "slot": "watch",
+     "price": 72,
+     "prestige": 1,
+     "desc": "准时耐用，看时间就够。"
+    },
+    {
+     "id": "watch_steel",
+     "name": "钢带腕表",
+     "brand": "时代表行",
+     "icon": "⌚",
+     "slot": "watch",
+     "price": 600,
+     "prestige": 8,
+     "desc": "钢带沉手，谈生意有底气。"
+    },
+    {
+     "id": "watch_lux",
+     "name": "机械名表",
+     "brand": "时代表行",
+     "icon": "⌚",
+     "slot": "watch",
+     "price": 6500,
+     "prestige": 30,
+     "desc": "自动上链，戴的是排面。"
+    },
+    {
+     "id": "shoes_canvas",
+     "name": "帆布鞋",
+     "brand": "街坊工坊",
+     "icon": "👟",
+     "slot": "shoes",
+     "price": 108,
+     "prestige": 2,
+     "desc": "轻便随脚，走街串巷。"
+    },
+    {
+     "id": "shoes_leather",
+     "name": "商务皮鞋",
+     "brand": "小林制衣",
+     "icon": "🥾",
+     "slot": "shoes",
+     "price": 540,
+     "prestige": 7,
+     "desc": "擦得锃亮，进退有度。"
+    },
+    {
+     "id": "shoes_handmade",
+     "name": "手工定制皮鞋",
+     "brand": "菲尼克斯",
+     "icon": "👞",
+     "slot": "shoes",
+     "price": 2860,
+     "prestige": 18,
+     "desc": "一针一线手工缝制，踩得出身份。"
+    }
+   ]
+  },
+  "assets": [
+   {
+    "id": "asset_bike",
+    "name": "凤凰自行车",
+    "icon": "🚲",
+    "category": "vehicle",
+    "price": 500,
+    "prestige": 5,
+    "desc": "代步够用，进货方便。"
+   },
+   {
+    "id": "asset_ebike",
+    "name": "电动车",
+    "icon": "🛵",
+    "category": "vehicle",
+    "price": 2400,
+    "prestige": 12,
+    "desc": "风里来雨里去，从不迟到。"
+   },
+   {
+    "id": "asset_car",
+    "name": "小轿车",
+    "icon": "🚗",
+    "category": "vehicle",
+    "price": 24000,
+    "prestige": 40,
+    "desc": "体面出行，谈合作不掉价。"
+   },
+   {
+    "id": "asset_luxcar",
+    "name": "商务豪车",
+    "icon": "🚘",
+    "category": "vehicle",
+    "price": 90000,
+    "prestige": 100,
+    "desc": "停在店门口就是招牌。"
+   },
+   {
+    "id": "asset_houselaoren",
+    "name": "老宅院",
+    "icon": "🏡",
+    "category": "house",
+    "price": 36000,
+    "prestige": 60,
+    "desc": "青砖老院，根在街坊。"
+   },
+   {
+    "id": "asset_apt",
+    "name": "临街公寓",
+    "icon": "🏢",
+    "category": "house",
+    "price": 72000,
+    "prestige": 110,
+    "desc": "窗明几净，站在阳台看整条街。"
+   },
+   {
+    "id": "asset_manor",
+    "name": "庄园别墅",
+    "icon": "🏰",
+    "category": "house",
+    "price": 220000,
+    "prestige": 300,
+    "desc": "小镇最气派的宅子，传奇的起点。"
+   }
+  ],
+  "finance": [
+   {
+    "id": "fin_quick",
+    "name": "灶台宝",
+    "icon": "⚡",
+    "period_days": 30,
+    "annual_rate": 0.15,
+    "min_amount": 500,
+    "desc": "30 天短锁定期，年化 15%，后厨闲钱理财入门。"
+   },
+   {
+    "id": "fin_steady",
+    "name": "招牌盈",
+    "icon": "🏦",
+    "period_days": 90,
+    "annual_rate": 0.19,
+    "min_amount": 2500,
+    "desc": "90 天锁定期，年化 19%，招牌菜的钱生钱。"
+   },
+   {
+    "id": "fin_long",
+    "name": "大掌柜计划",
+    "icon": "🌳",
+    "period_days": 180,
+    "annual_rate": 0.23,
+    "min_amount": 8000,
+    "desc": "180 天长线理财，年化 23%，做大掌柜的耐心之选。"
+   }
+  ],
+  "branching": {
+   "enabled": true,
+   "max_shops": 3,
+   "base_open_cost": 3000,
+   "cost_growth": 1.6,
+   "require_reputation": 30
+  },
+  "supply": {
+   "enabled": true,
+   "supplier_name": "鲜味源供应链",
+   "tiers": [
+    {
+     "name": "普通客户",
+     "req_points": 0,
+     "discount": 1.0,
+     "credit_limit": 0
+    },
+    {
+     "name": "稳定客户",
+     "req_points": 800,
+     "discount": 0.98,
+     "credit_limit": 0
+    },
+    {
+     "name": "金牌客户",
+     "req_points": 3000,
+     "discount": 0.95,
+     "credit_limit": 2000
+    },
+    {
+     "name": "战略伙伴",
+     "req_points": 9000,
+     "discount": 0.88,
+     "credit_limit": 5000
+    }
+   ],
+   "exclusive_products": [
+    "roast_goose",
+    "truffle_rice"
+   ],
+   "credit_term_min": 43200
+  },
+  "competition": {
+   "enabled": true,
+   "threshold_reputation": 50,
+   "max_competitors": 2,
+   "pool": [
+    {
+     "id": "gege_noodle",
+     "name": "隔壁面馆",
+     "icon": "🍜",
+     "strength": 1.0
+    },
+    {
+     "id": "fang_canteen",
+     "name": "芳姐食堂",
+     "icon": "🍱",
+     "strength": 1.15
+    }
+   ],
+   "ad_cost": 400,
+   "charm_cost": 250
+  },
+  "festival": {
+   "enabled": true,
+   "prep_window_min": 1440,
+   "festivals": [
+    {
+     "id": "food_fair",
+     "name": "美食节",
+     "icon": "🍜",
+     "season": "spring",
+     "day": 1,
+     "duration_min": 1440,
+     "demand": {
+      "fried_rice": 2.0,
+      "beef_noodle": 1.9,
+      "cold_noodle": 1.7
+     },
+     "setup_cap": 1000,
+     "reward_mult": 1.6,
+     "event_rate": 0.12
+    },
+    {
+     "id": "summer_eats",
+     "name": "夏夜大排档",
+     "icon": "🍢",
+     "season": "summer",
+     "day": 4,
+     "duration_min": 1440,
+     "demand": {
+      "spicy_fish": 1.9,
+      "kungpao_chicken": 1.8,
+      "mung_soup": 1.8,
+      "plum_juice": 1.8
+     },
+     "setup_cap": 1200,
+     "reward_mult": 1.6,
+     "event_rate": 0.12
+    },
+    {
+     "id": "harvest_menu",
+     "name": "丰收宴",
+     "icon": "🌾",
+     "season": "autumn",
+     "day": 4,
+     "duration_min": 1440,
+     "demand": {
+      "braised_pork": 1.9,
+      "sweet_sour_ribs": 1.9,
+      "clay_pot_tofu": 1.6
+     },
+     "setup_cap": 1200,
+     "reward_mult": 1.6,
+     "event_rate": 0.12
+    },
+    {
+     "id": "new_year_feast",
+     "name": "年夜饭专场",
+     "icon": "🧧",
+     "season": "winter",
+     "day": 6,
+     "duration_min": 1440,
+     "demand": {
+      "dongpo_elbow": 2.1,
+      "braised_ribs": 2.0,
+      "steamed_bass": 2.0,
+      "roast_goose": 1.8
+     },
+     "setup_cap": 1500,
+     "reward_mult": 1.7,
+     "event_rate": 0.12
+    }
+   ]
+  }
+ },
+ "achievements": [
+  {
+   "id": "first_sale",
+   "icon": "🍳",
+   "name": "开张大吉",
+   "desc": "卖出第一道菜",
+   "type": "first_sale",
+   "value": 1
+  },
+  {
+   "id": "revenue_500",
+   "icon": "💰",
+   "name": "日进斗金",
+   "desc": "单日营业额达到 500 元",
+   "type": "revenue_day",
+   "value": 500
+  },
+  {
+   "id": "profit_3",
+   "icon": "🔥",
+   "name": "三连胜",
+   "desc": "连续 3 天盈利",
+   "type": "profit_streak",
+   "value": 3
+  },
+  {
+   "id": "favor_60",
+   "icon": "🤝",
+   "name": "街坊知己",
+   "desc": "任意一位食客好感度达到 60",
+   "type": "favor_any",
+   "value": 60
+  },
+  {
+   "id": "rep_50",
+   "icon": "⭐",
+   "name": "口碑相传",
+   "desc": "声誉达到 50",
+   "type": "reputation",
+   "value": 50
+  },
+  {
+   "id": "upgrade_2",
+   "icon": "🛠",
+   "name": "装修达人",
+   "desc": "完成 2 次装修升级",
+   "type": "upgrades",
+   "value": 2
+  },
+  {
+   "id": "debt_clear",
+   "icon": "🧾",
+   "name": "无债一身轻",
+   "desc": "曾借款并全部还清",
+   "type": "debt_clear",
+   "value": 0
+  },
+  {
+   "id": "net_worth_12000",
+   "icon": "🏠",
+   "name": "小有家产",
+   "desc": "净资产达到 12,000 元",
+   "type": "net_worth",
+   "value": 12000
+  },
+  {
+   "id": "hot_2",
+   "icon": "📈",
+   "name": "爆款操盘手",
+   "desc": "经历 2 次爆款热卖",
+   "type": "hot_count",
+   "value": 2
+  },
+  {
+   "id": "day_14",
+   "icon": "🏮",
+   "name": "老街坊",
+   "desc": "经营满 14 天",
+   "type": "days",
+   "value": 14
+  },
+  {
+   "id": "staff_2",
+   "icon": "👥",
+   "name": "团队雏形",
+   "desc": "同时雇佣 2 名员工",
+   "type": "staff_count",
+   "value": 2
+  },
+  {
+   "id": "bank_interest_100",
+   "type": "bank_interest",
+   "value": 100,
+   "icon": "🏦",
+   "name": "钱生钱",
+   "desc": "累计获得 100 元存款利息"
+  },
+  {
+   "id": "quest_5",
+   "type": "quest_done",
+   "value": 5,
+   "icon": "📦",
+   "name": "有求必应",
+   "desc": "完成 5 单街坊委托"
+  },
+  {
+   "id": "relocate_1",
+   "type": "relocate",
+   "value": 1,
+   "icon": "🏠",
+   "name": "乔迁之喜",
+   "desc": "购买并迁移到第一处新地产"
+  },
+  {
+   "id": "prestige_50",
+   "type": "prestige",
+   "value": 50,
+   "icon": "🧍",
+   "name": "衣着光鲜",
+   "desc": "个人声望达到 50（装扮 + 资产）"
+  },
+  {
+   "id": "asset_1",
+   "type": "asset",
+   "value": 1,
+   "icon": "🚗",
+   "name": "有车有房",
+   "desc": "购置第一件个人资产"
+  },
+  {
+   "id": "supply_top",
+   "type": "supply_max_tier",
+   "value": 1,
+   "icon": "🤝",
+   "name": "战略伙伴",
+   "desc": "与供应商达成战略合作，解锁独家菜品"
+  },
+  {
+   "id": "rating_star",
+   "type": "rating_tier",
+   "value": 3,
+   "icon": "🏅",
+   "name": "口碑之星",
+   "desc": "月度口碑评级达到「街区标杆」"
+  },
+  {
+   "id": "beat_rival",
+   "type": "competitor_closed",
+   "value": 1,
+   "icon": "🏁",
+   "name": "街区称霸",
+   "desc": "把一家竞争对手打到歇业"
+  },
+  {
+   "id": "festival_first",
+   "icon": "🎊",
+   "name": "开门红",
+   "desc": "庆祝第一个节日",
+   "type": "festival_count",
+   "value": 1
+  },
+  {
+   "id": "festival_master",
+   "icon": "🏮",
+   "name": "节日操盘手",
+   "desc": "单场节日战报累计奖金达 2,500 元",
+   "type": "festival_bonus",
+   "value": 2500
+  },
+  {
+   "id": "staff_promote",
+   "icon": "🎓",
+   "name": "骨干团队",
+   "desc": "晋升第一位骨干员工",
+   "type": "staff_promote",
+   "value": 0
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+server:
+  port: ${SERVER_PORT:8899}
+
+spring:
+  application:
+    name: term-sim-engine
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+termgame:
+  # 游戏安装文件目录（每个 .json 文件即一个可安装的游戏）
+  games-dir: ${TERMGAME_GAMES_DIR:./games}
+  # 存档目录
+  saves-dir: ${TERMGAME_SAVES_DIR:./saves}
+
+logging:
+  level:
+    com.termgame: INFO

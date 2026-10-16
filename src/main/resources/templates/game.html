@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="game-page" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${def.name} + ' ▸ TermSim'">游戏</title>
+    <link rel="stylesheet" th:href="@{/css/terminal.css(v=1.12.0)}">
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+</head>
+<body>
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="shell game-shell">
+
+    <!-- 顶栏 -->
+    <header class="topbar">
+        <div style="display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;">
+            <span class="title" th:text="${def.icon} + ' ' + ${def.name}">游戏名</span>
+            <span class="sub" th:text="'存档：' + ${state.saveName}">存档</span>
+            <span class="sub" th:text="'引擎 v' + ${engineVersion}"></span>
+        </div>
+        <div class="clock-wrap">
+            <div class="clock" id="clock"></div>
+            <div class="top-actions">
+                <button class="amber top-btn" id="btnSettings" title="设置：时间速度 / 暂停">⚙ 设置</button>
+                <button class="cyan top-btn" id="btnSave" title="随时存档">💾 保存</button>
+                <button class="top-btn" id="btnHome" title="返回游戏选择">🏠 返回</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 设置弹层 -->
+    <div class="modal-mask" id="settingsMask" style="display:none;">
+        <div class="modal-panel">
+            <div class="modal-head">
+                <span class="modal-title">⚙ 设置</span>
+                <button class="modal-close" id="btnSettingsClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="set-group">
+                    <div class="set-label">⏱ 时间倍速（现实 1 秒 = 游戏 N 分钟）</div>
+                    <div class="set-speed-row" id="setSpeedRow"></div>
+                </div>
+                <div class="set-group">
+                    <div class="set-label">⏸ 时间控制</div>
+                    <button class="set-pause-btn" id="btnSettingsPause">⏸ 暂停时间</button>
+                </div>
+                <div class="set-group">
+                    <div class="set-label">💾 存档管理</div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="set-sub-btn" id="btnSettingsSave">保存当前进度</button>
+                        <button class="set-sub-btn" id="btnSettingsHome">返回游戏选择</button>
+                    </div>
+                </div>
+                <div class="set-tip">终端命令同样可用：speed 0.5~5 / pause / resume</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 开分店弹窗 -->
+    <div class="modal-mask" id="branchMask" style="display:none;">
+        <div class="modal-panel">
+            <div class="modal-head">
+                <span class="modal-title">🏬 开分店</span>
+                <button class="modal-close" id="btnBranchClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="set-group">
+                    <div class="set-label">店名</div>
+                    <input type="text" id="branchName" class="modal-input" maxlength="12" placeholder="如：二号店 / 街角二店" value="">
+                </div>
+                <div class="set-group">
+                    <div class="set-label">选址（不同地段客流与房价不同）</div>
+                    <select id="branchLocation" class="modal-input"></select>
+                </div>
+                <div class="set-group" style="color:var(--fg-dim);font-size:12px;line-height:1.9;" id="branchPreview"></div>
+                <div style="display:flex;gap:10px;margin-top:14px;">
+                    <button class="primary" id="btnBranchOpen">🏬 确认开店</button>
+                    <button class="amber" id="btnBranchCancel">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 刮刮乐刮卡弹窗 -->
+    <div class="modal-mask" id="scratchMask" style="display:none;">
+        <div class="modal-panel scratch-panel">
+            <div class="modal-head">
+                <span class="modal-title">🎫 刮刮乐 · 即买即刮</span>
+                <button class="modal-close" id="btnScratchClose">✕</button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <div class="scratch-card">
+                    <div class="scratch-result" id="scratchResult">🎉 恭喜中奖 +0 元</div>
+                    <canvas id="scratchCanvas" width="420" height="150"></canvas>
+                </div>
+                <div class="scratch-tip">按住鼠标在涂层上滑动刮开，刮开超过 40% 揭晓结果</div>
+                <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
+                    <button class="primary" id="btnScratchAgain">🎫 再刮一张</button>
+                    <button class="amber" id="btnScratchDone">完成</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 技能选择弹窗（v1.11.0 员工培养晋升） -->
+    <div class="modal-mask" id="skillMask" style="display:none;">
+        <div class="modal-panel" style="max-width:520px;">
+            <div class="modal-head">
+                <span class="modal-title">🎓 选择晋升技能</span>
+                <button class="modal-close" id="btnSkillClose">✕</button>
+            </div>
+            <div class="modal-body" id="skillList"></div>
+        </div>
+    </div>
+
+    <div class="statusbar" id="statusbar"></div>
+
+    <!-- 店铺切换条（v1.9.0 分店系统） -->
+    <div class="shop-switcher" id="shopSwitcher"></div>
+
+    <!-- 主体 -->
+    <div class="game-layout">
+        <!-- 左列：终端（窗口标题 + 日志 + 命令行输入） -->
+        <div class="term-col">
+            <div class="term-head">
+                <span class="dots"><i></i><i></i><i></i></span>
+                <span class="term-title">商店终端 · store@localhost</span>
+                <span class="term-cmd" id="termMode">实时日志</span>
+            </div>
+            <div class="console" id="console"></div>
+            <div class="cmdline">
+                <span class="prompt">boss@store:~$</span>
+                <input type="text" id="cmdInput" autocomplete="off" spellcheck="false" placeholder="输入 help 查看命令…">
+                <span class="hint" id="cmdHint"></span>
+            </div>
+        </div>
+
+        <!-- 中列：主控制台（tab 页） -->
+        <main class="panel main-console" style="display:flex;flex-direction:column;min-width:0;">
+            <div class="tabs">
+                <div class="tab active" data-tab="shelf">货架</div>
+                <div class="tab" data-tab="price">定价</div>
+                <div class="tab" data-tab="upgrade">装修</div>
+                <div class="tab" data-tab="loan">贷款</div>
+                <div class="tab" data-tab="bank">银行</div>
+                <div class="tab" data-tab="map">地图</div>
+                <div class="tab" data-tab="wardrobe">形象</div>
+                <div class="tab" data-tab="report">报表</div>
+                <div class="tab" data-tab="trade">贸易</div>
+                <div class="tab" data-tab="compete">竞争</div>
+                <div class="tab" data-tab="staff">雇员</div>
+                <div class="tab" data-tab="social">街坊</div>
+                <div class="tab" data-tab="achieve">成就</div>
+            </div>
+
+            <div class="tab-pane active" id="pane-shelf">
+                <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+                    <span style="color:var(--fg-dim);align-self:center;">进货：输入数量后点「进货」；也可以整单快速补货。</span>
+                    <span style="color:var(--fg-dim);align-self:center;">智能补货：</span>
+                    <button class="amber btn auto-stock" data-qty="20" title="为所有已解锁商品各补 20 件">⚡ 各补 20</button>
+                    <button class="btn auto-stock" data-qty="100" title="为所有已解锁商品各补 100 件">各补 100</button>
+                    <button class="btn auto-stock" data-qty="200" title="为所有已解锁商品各补 200 件">各补 200</button>
+                    <button class="btn auto-stock" data-qty="300" title="为所有已解锁商品各补 300 件">各补 300</button>
+                    <button class="btn auto-stock" data-qty="500" title="为所有已解锁商品各补 500 件">各补 500</button>
+                    <button class="amber" id="btnDiscard">🗑 丢弃全部临期商品</button>
+                    <button class="cyan" id="btnPromo">📣 限时促销</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="term-table" id="shelfTable">
+                        <thead>
+                        <tr>
+                            <th>商品</th><th>分类</th><th>进价</th><th>建议售价</th>
+                            <th class="num">库存</th><th class="num">保质期</th>
+                            <th>定价倍率</th><th>进货</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="shelfPager" class="pager-row"></div>
+            </div>
+
+            <div class="tab-pane" id="pane-price">
+                <div style="display:flex;gap:10px;margin-bottom:8px;align-items:center;flex-wrap:wrap;">
+                    <span style="color:var(--fg-dim);">批量定价：</span>
+                    <button data-mult="0.8" class="btn price-preset">促销 0.8×</button>
+                    <button data-mult="1.0" class="btn price-preset">平价 1.0×</button>
+                    <button data-mult="1.2" class="btn price-preset">稍贵 1.2×</button>
+                    <button data-mult="1.5" class="btn price-preset">高价 1.5×</button>
+                    <span style="color:var(--fg-dim);">定价越高毛利越高，但顾客会变少（NPC 还会抱怨）。</span>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table class="term-table" id="priceTable">
+                        <thead>
+                        <tr>
+                            <th>商品</th><th>建议售价</th><th class="num">当前售价</th>
+                            <th class="num">毛利</th><th>倍率</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="pricePager" class="pager-row"></div>
+            </div>
+
+            <div class="tab-pane" id="pane-upgrade">
+                <div id="upgradeList"></div>
+                <div id="upgradePager" class="pager-row"></div>
+            </div>
+            <div class="tab-pane" id="pane-loan">
+                <div id="loanList"></div>
+                <div id="loanPager" class="pager-row"></div>
+                <div class="panel" style="background:var(--bg-panel-2);">
+                    <div class="panel-title">负债管理</div>
+                    <div id="debtInfo"></div>
+                    <div id="repayBox"></div>
+                </div>
+            </div>
+            <div class="tab-pane" id="pane-report">
+                <div id="reportPanel"></div>
+            </div>
+            <div class="tab-pane" id="pane-achieve">
+                <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+                    <span style="color:var(--fg-dim);">成就达成会自动解锁并在终端庆祝。达成数：</span>
+                    <span id="achieveCount" style="color:var(--amber);font-weight:700;"></span>
+                </div>
+                <div id="achieveList"></div>
+            </div>
+            <div class="tab-pane" id="pane-trade">
+                <div id="supplyPanel" style="margin-bottom:10px;"></div>
+                <div id="tradePanel"></div>
+            </div>
+            <div class="tab-pane" id="pane-compete">
+                <div id="competePanel"></div>
+            </div>
+            <div class="tab-pane" id="pane-bank">
+                <div class="panel" style="background:var(--bg-panel-2);">
+                    <div id="bankInfo"></div>
+                    <div id="bankInputs" class="row-actions" style="flex-wrap:wrap;gap:8px;margin-top:4px;"></div>
+                </div>
+                <div id="financePanel" class="panel" style="background:linear-gradient(135deg,var(--bg-panel-2),rgba(52,211,153,0.10));border:1px solid rgba(52,211,153,0.4);margin-top:10px;"></div>
+                <div id="lotteryInfo" class="panel" style="background:linear-gradient(135deg,var(--bg-panel-2),rgba(255,193,7,0.12));border:1px solid rgba(255,193,7,0.45);margin-top:10px;"></div>
+            </div>
+            <div class="tab-pane" id="pane-map">
+                <div id="houseLoanCard" style="margin-bottom:10px;"></div>
+                <div id="mapList"></div>
+            </div>
+            <div class="tab-pane" id="pane-wardrobe">
+                <div id="prestigePanel" style="margin-bottom:10px;"></div>
+                <div id="wardrobePanel"></div>
+                <div id="assetPanel" style="margin-top:10px;"></div>
+                <div id="prestigeLogPanel" style="margin-top:10px;"></div>
+            </div>
+            <div class="tab-pane" id="pane-staff">
+                <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+                    <span style="color:var(--fg-dim);">雇佣员工按月发薪，自动打理店铺；涨薪提效率，降薪省成本但可能离职。</span>
+                </div>
+                <div id="staffList"></div>
+                <div class="pager-row" id="staffPager"></div>
+            </div>
+            <div class="tab-pane" id="pane-social">
+                <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+                    <span style="color:var(--fg-dim);">常与街坊互动可提升好感：高好感会带客上门 / 帮忙宣传。</span>
+                </div>
+                <div id="questPanel" style="margin-bottom:10px;"></div>
+                <div id="socialList"></div>
+                <div class="pager-row" id="socialPager"></div>
+            </div>
+        </main>
+
+        <!-- 右列：状态面板（店铺状态 / 街坊好感度 / 当日增益） -->
+        <aside class="sidepanel">
+            <div class="panel">
+                <div class="panel-title">店铺状态</div>
+                <div id="shopStatus"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-title">街坊好感度 <span class="c-dim" style="font-size:11px;">（每日打烊结算）</span></div>
+                <div id="npcPanel"></div>
+            </div>
+            <div class="panel">
+                <div class="panel-title">当日增益</div>
+                <div id="buffPanel"></div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<!-- 全屏 CRT 扫描光带（纯装饰，不影响交互） -->
+<div class="crt-scan" aria-hidden="true"></div>
+
+<!-- 游戏结束横幅 -->
+<div class="gameover" id="gameover">
+    <div class="box" id="gameoverBox">
+        <h2 id="goTitle">GAME OVER</h2>
+        <p id="goMsg"></p>
+        <a class="btn primary" th:href="@{/}">◂ 返回启动器</a>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /* 初始数据由服务端注入（JSON 字符串经 JSON.parse 还原为对象） */
+    var SAVE_ID   = /*[[${saveId}]]*/ '';
+    var INIT_STATE = JSON.parse(/*[[${stateJson}]]*/ "{}");
+    var INIT_DEF   = JSON.parse(/*[[${defJson}]]*/ "{}");
+    var ENGINE_VERSION = /*[[${engineVersion}]]*/ '1.0.0';
+</script>
+<script th:src="@{/js/terminal.js(v=1.12.0)}"></script>
+<script th:src="@{/js/vendor/three.min.js(v=1.12.0)}"></script>
+<script th:src="@{/js/bg3d.js(v=1.12.0)}"></script>
+</body>
+</html>

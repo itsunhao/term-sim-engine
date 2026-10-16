@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TermSim Engine ▸ 游戏启动器</title>
+    <link rel="stylesheet" th:href="@{/css/terminal.css(v=1.12.0)}">
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+</head>
+<body>
+<canvas id="bg3d" aria-hidden="true"></canvas>
+<div class="shell">
+
+    <!-- 顶栏 -->
+    <header class="topbar">
+        <div style="display:flex;gap:14px;align-items:baseline;">
+            <span class="title">TERMSIM&nbsp;ENGINE</span>
+            <span class="sub">终端模拟经营游戏引擎 · v1.0.0</span>
+        </div>
+        <div class="clock" id="clock"></div>
+    </header>
+
+    <!-- 闪存消息 -->
+    <div class="flash" th:if="${flashMsg}" th:classappend="${flashType == 'error'} ? 'error'">
+        <span th:text="${flashMsg}"></span>
+    </div>
+
+    <!-- 已安装游戏 -->
+    <section class="panel">
+        <div class="panel-title">已安装游戏（<span th:text="${games.size()}">0</span>）</div>
+        <div class="launcher-grid">
+            <div class="game-card" th:each="g : ${games}">
+                <div class="ghead">
+                    <span style="font-size:26px;" th:text="${g.icon ?: '🎮'}">🎮</span>
+                    <div>
+                        <div class="gname" th:text="${g.name}">游戏名</div>
+                        <div class="gver" th:text="'v' + ${g.version} + ' · by ' + ${g.author}">v1.0</div>
+                    </div>
+                </div>
+                <div class="gdesc" th:text="${g.description}">描述</div>
+                <div class="gmeta"
+                     th:text="'商品 ' + ${g.products.size()} + ' · NPC ' + ${g.npcs.size()} + ' · 装修 ' + ${g.upgrades.size()} + ' · 贷款 ' + ${g.loans.size()}">
+                    元数据
+                </div>
+                <div class="gacts">
+                    <form method="post" th:action="@{/game/new}" style="display:inline;">
+                        <input type="hidden" name="gameId" th:value="${g.id}">
+                        <input type="hidden" name="saveName" th:value="'存档' + ${g.name}">
+                        <button type="submit" class="primary">▸ 开始新游戏</button>
+                    </form>
+                    <span class="sub" th:text="'文件：' + ${g.id} + '.json'" style="align-self:center;">文件</span>
+                </div>
+            </div>
+            <div class="game-card" th:if="${#lists.isEmpty(games)}">
+                <div class="gname" style="color:var(--fg-dim);">尚未安装任何游戏</div>
+                <div class="gdesc" style="color:var(--fg-dim);">使用右侧"安装游戏"上传一个 .json 游戏文件，或在 games 目录中放入后重启引擎。</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="launcher-grid">
+        <!-- 安装 -->
+        <section class="panel">
+            <div class="panel-title">安装游戏文件</div>
+            <form method="post" th:action="@{/install}" enctype="multipart/form-data" id="installForm">
+                <div class="install-zone">
+                    <div style="margin-bottom:10px;color:var(--fg);">拖入或选择 <span style="color:var(--green);">game.json</span> 安装文件</div>
+                    <label for="gameFile" class="btn">选择文件…</label>
+                    <input type="file" id="gameFile" name="file" accept=".json,application/json">
+                    <div class="tip" id="fileInfo">未选择文件</div>
+                    <div style="margin-top:12px;">
+                        <button type="submit" class="primary">⇪ 安装游戏</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- 存档 -->
+        <section class="panel">
+            <div class="panel-title">我的存档（<span th:text="${saves.size()}">0</span>）</div>
+            <div th:if="${#lists.isEmpty(saves)}" style="color:var(--fg-dim);">
+                还没有存档。选一个游戏，开始你的第一家小店吧。<br>
+                <span style="color:var(--fg-dim);">提示：经营目标（以小卖部为例）——第 2 年结束前净资产达到 8,000 元。</span>
+            </div>
+            <div class="save-row" th:each="sv : ${saves}" th:classappend="${sv.ended} ? 'ended'">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span th:text="${sv.gameIcon}">🏪</span>
+                    <div>
+                        <div class="sname" th:text="${sv.gameName} + ' · ' + ${sv.saveName}">存档</div>
+                        <div class="sinfo" th:text="${sv.dayLabel} + ' · 现金 ' + ${#numbers.formatDecimal(sv.cash,1,2)} + ' · 负债 ' + ${#numbers.formatDecimal(sv.debt,1,2)} + ' · 声誉 ' + ${#numbers.formatDecimal(sv.reputation,1,1)}">信息</div>
+                        <div class="sinfo" th:if="${sv.ended}" th:text="'[已结束：' + ${sv.endType} + ']'"></div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;">
+                    <a th:href="@{'/game/' + ${sv.saveId()}}" class="btn">▶ 继续</a>
+                    <button class="danger del-save" th:attr="data-id=${sv.saveId()}">✕</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 帮助 -->
+    <section class="panel help-block">
+        <div class="panel-title">使用说明</div>
+        <div>
+            ① 上传游戏 JSON 文件安装（也可直接将文件放入 <code>games/</code> 目录后重启引擎）；
+            ② 选择游戏「开始新游戏」进入终端界面；
+            ③ 实时时间流：现实 1 秒 = 游戏 1 分钟（06:00-24:00 营业），可随时 <code>暂停</code> 或 <code>打烊快进</code>；
+            ④ 四季与天气影响需求，注意保质期与库存管理；
+            ⑤ 游戏内可使用命令行：输入 <code>help</code> 查看所有命令。
+        </div>
+    </section>
+
+</div>
+
+<script>
+$(function () {
+    // 时钟
+    setInterval(function () {
+        var d = new Date();
+        var p = function (n) { return String(n).padStart(2, '0'); };
+        $('#clock').text('[' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()) + ']');
+    }, 1000);
+
+    // 文件选择提示
+    $('#gameFile').on('change', function () {
+        var f = this.files[0];
+        $('#fileInfo').text(f ? ('已选择：' + f.name + '（' + (f.size / 1024).toFixed(1) + ' KB）') : '未选择文件');
+    });
+
+    // 删除存档
+    $('.del-save').on('click', function () {
+        var id = $(this).data('id');
+        if (!confirm('确定删除存档 [' + id + '] 吗？此操作不可恢复。')) return;
+        var parts = id.split('::');
+        var gameId = encodeURIComponent(parts[0]);
+        var saveName = encodeURIComponent(parts[1]);
+        $.post('/api/game/' + gameId + '/saves/' + saveName + '/delete', function (res) {
+            location.reload();
+        }).fail(function () {
+            alert('删除失败');
+        });
+    });
+});
+</script>
+<script th:src="@{/js/vendor/three.min.js(v=1.12.0)}"></script>
+<script th:src="@{/js/bg3d.js(v=1.12.0)}"></script>
+</body>
+</html>

@@ -1,0 +1,1988 @@
+{
+ "id": "convenience-store",
+ "name": "街角小卖部",
+ "version": "1.11.0",
+ "description": "开一家街角小卖部：进货、定价、贷款、装修，应对四季与天气。玩法：每日晨报、限时促销、爆款热卖、成就、NPC 社交、批发贸易。现实 1 秒 = 游戏 1 分钟，营业时段 06:00-24:00。目标：第 2 年结束前净资产达到 8,000 元。",
+ "author": "TermSim Engine",
+ "icon": "🏪",
+ "meta": {
+  "currency": "元",
+  "start_cash": 1000.0,
+  "start_reputation": 25,
+  "max_reputation": 100,
+  "days_per_season": 7,
+  "start_season": "spring",
+  "base_foot_traffic": 25,
+  "price_min": 0.6,
+  "price_max": 2.5,
+  "default_price_multiplier": 1.0,
+  "debt_limit": 15000.0,
+  "loan_grace_days": 7,
+  "bank_annual_rate": 0.12
+ },
+ "seasons": [
+  {
+   "id": "spring",
+   "name": "春",
+   "icon": "🌱",
+   "foot_traffic_modifier": 1.05,
+   "description": "万物复苏，街上的人渐渐多了起来。",
+   "demand": {}
+  },
+  {
+   "id": "summer",
+   "name": "夏",
+   "icon": "☀️",
+   "foot_traffic_modifier": 1.1,
+   "description": "烈日炎炎，冷饮和冰品最好卖。",
+   "demand": {}
+  },
+  {
+   "id": "autumn",
+   "name": "秋",
+   "icon": "🍂",
+   "foot_traffic_modifier": 1.0,
+   "description": "天高气爽，客流平稳。",
+   "demand": {}
+  },
+  {
+   "id": "winter",
+   "name": "冬",
+   "icon": "❄️",
+   "foot_traffic_modifier": 0.85,
+   "description": "寒风刺骨，热食热饮最受欢迎。",
+   "demand": {}
+  }
+ ],
+ "weathers": [
+  {
+   "id": "sunny",
+   "name": "晴",
+   "icon": "☀️",
+   "season_weight": {
+    "spring": 30,
+    "summer": 35,
+    "autumn": 30,
+    "winter": 20
+   },
+   "foot_traffic_modifier": 1.0,
+   "flavor": "阳光正好。",
+   "demand": {}
+  },
+  {
+   "id": "cloudy",
+   "name": "多云",
+   "icon": "☁️",
+   "season_weight": {
+    "spring": 25,
+    "summer": 20,
+    "autumn": 25,
+    "winter": 25
+   },
+   "foot_traffic_modifier": 1.0,
+   "flavor": "云层有点厚。",
+   "demand": {}
+  },
+  {
+   "id": "rain",
+   "name": "雨",
+   "icon": "🌧️",
+   "season_weight": {
+    "spring": 20,
+    "summer": 15,
+    "autumn": 20,
+    "winter": 10
+   },
+   "foot_traffic_modifier": 0.8,
+   "flavor": "雨点打在招牌上。",
+   "demand": {
+    "umbrella": 3.0,
+    "instant_noodles": 1.4,
+    "oden": 1.4
+   }
+  },
+  {
+   "id": "wind",
+   "name": "大风",
+   "icon": "🌬️",
+   "season_weight": {
+    "spring": 10,
+    "summer": 5,
+    "autumn": 15,
+    "winter": 10
+   },
+   "foot_traffic_modifier": 0.85,
+   "flavor": "风吹得货架上的塑料布哗哗响。",
+   "demand": {}
+  },
+  {
+   "id": "hot",
+   "name": "酷暑",
+   "icon": "🌡️",
+   "season_weight": {
+    "spring": 0,
+    "summer": 25,
+    "autumn": 0,
+    "winter": 0
+   },
+   "foot_traffic_modifier": 0.9,
+   "flavor": "热浪滚滚，大家都想喝点凉的。",
+   "demand": {
+    "ice_cream": 3.0,
+    "popsicle": 2.5,
+    "cola": 2.2,
+    "sprite": 2.2,
+    "ice_tea": 2.0,
+    "mineral_water": 1.5
+   }
+  },
+  {
+   "id": "snow",
+   "name": "雪",
+   "icon": "❄️",
+   "season_weight": {
+    "spring": 0,
+    "summer": 0,
+    "autumn": 0,
+    "winter": 30
+   },
+   "foot_traffic_modifier": 0.7,
+   "flavor": "雪花飘落，路上行人裹紧了大衣。",
+   "demand": {
+    "sausage": 2.0,
+    "oden": 2.0,
+    "baozi": 1.8,
+    "milk_tea": 2.2,
+    "instant_noodles": 1.4
+   }
+  },
+  {
+   "id": "coldwave",
+   "name": "寒潮",
+   "icon": "🥶",
+   "season_weight": {
+    "spring": 0,
+    "summer": 0,
+    "autumn": 0,
+    "winter": 15
+   },
+   "foot_traffic_modifier": 0.7,
+   "flavor": "寒潮来袭，滴水成冰。",
+   "demand": {
+    "milk_tea": 2.2,
+    "sausage": 1.8,
+    "baozi": 1.6
+   }
+  }
+ ],
+ "products": [
+  {
+   "id": "cola",
+   "name": "可乐",
+   "category": "饮料",
+   "icon": "🥤",
+   "wholesale_price": 2.5,
+   "base_retail_price": 3.5,
+   "popularity": 90,
+   "shelf_life_days": 90,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.8,
+    "winter": 0.8
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "sprite",
+   "name": "雪碧",
+   "category": "饮料",
+   "icon": "🥤",
+   "wholesale_price": 2.5,
+   "base_retail_price": 3.5,
+   "popularity": 85,
+   "shelf_life_days": 90,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.7,
+    "winter": 0.8
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "mineral_water",
+   "name": "矿泉水",
+   "category": "饮料",
+   "icon": "💧",
+   "wholesale_price": 1.5,
+   "base_retail_price": 2.5,
+   "popularity": 80,
+   "shelf_life_days": 90,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.4,
+    "winter": 0.9
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "ice_tea",
+   "name": "冰红茶",
+   "category": "饮料",
+   "icon": "🧋",
+   "wholesale_price": 3.0,
+   "base_retail_price": 4.5,
+   "popularity": 75,
+   "shelf_life_days": 60,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.6
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "coffee",
+   "name": "罐装咖啡",
+   "category": "饮料",
+   "icon": "☕",
+   "wholesale_price": 3.5,
+   "base_retail_price": 5.5,
+   "popularity": 70,
+   "shelf_life_days": 90,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.4
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "milk",
+   "name": "鲜牛奶",
+   "category": "饮料",
+   "icon": "🥛",
+   "wholesale_price": 3.0,
+   "base_retail_price": 4.5,
+   "popularity": 72,
+   "shelf_life_days": 7,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "potato_chips",
+   "name": "薯片",
+   "category": "零食",
+   "icon": "🍟",
+   "wholesale_price": 4.0,
+   "base_retail_price": 6.0,
+   "popularity": 85,
+   "shelf_life_days": 90,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "instant_noodles",
+   "name": "方便面",
+   "category": "零食",
+   "icon": "🍜",
+   "wholesale_price": 3.5,
+   "base_retail_price": 5.5,
+   "popularity": 80,
+   "shelf_life_days": 120,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "chocolate",
+   "name": "巧克力",
+   "category": "零食",
+   "icon": "🍫",
+   "wholesale_price": 4.5,
+   "base_retail_price": 7.0,
+   "popularity": 70,
+   "shelf_life_days": 120,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.5
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "gum",
+   "name": "口香糖",
+   "category": "零食",
+   "icon": "🍬",
+   "wholesale_price": 1.5,
+   "base_retail_price": 2.5,
+   "popularity": 60,
+   "shelf_life_days": 180,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "latiao",
+   "name": "辣条",
+   "category": "零食",
+   "icon": "🌶️",
+   "wholesale_price": 2.0,
+   "base_retail_price": 3.5,
+   "popularity": 78,
+   "shelf_life_days": 120,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "cookies",
+   "name": "饼干",
+   "category": "零食",
+   "icon": "🍪",
+   "wholesale_price": 3.5,
+   "base_retail_price": 5.5,
+   "popularity": 65,
+   "shelf_life_days": 120,
+   "unlock_upgrade_id": null,
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "ice_cream",
+   "name": "冰激凌",
+   "category": "冰品",
+   "icon": "🍦",
+   "wholesale_price": 3.0,
+   "base_retail_price": 5.0,
+   "popularity": 80,
+   "shelf_life_days": 30,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 2.5,
+    "winter": 0.3
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "popsicle",
+   "name": "老冰棍",
+   "category": "冰品",
+   "icon": "🍡",
+   "wholesale_price": 1.5,
+   "base_retail_price": 2.5,
+   "popularity": 85,
+   "shelf_life_days": 30,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 2.2,
+    "winter": 0.2
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "sausage",
+   "name": "烤肠",
+   "category": "熟食",
+   "icon": "🌭",
+   "wholesale_price": 2.0,
+   "base_retail_price": 3.5,
+   "popularity": 85,
+   "shelf_life_days": 2,
+   "unlock_upgrade_id": "upg_level2",
+   "season_demand": {
+    "winter": 1.5
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "baozi",
+   "name": "鲜肉包子",
+   "category": "熟食",
+   "icon": "🥟",
+   "wholesale_price": 1.5,
+   "base_retail_price": 3.0,
+   "popularity": 80,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_level2",
+   "season_demand": {
+    "winter": 1.4
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "oden",
+   "name": "关东煮",
+   "category": "熟食",
+   "icon": "🍢",
+   "wholesale_price": 2.5,
+   "base_retail_price": 4.5,
+   "popularity": 75,
+   "shelf_life_days": 1,
+   "unlock_upgrade_id": "upg_level2",
+   "season_demand": {
+    "winter": 1.3
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "milk_tea",
+   "name": "热奶茶",
+   "category": "熟食",
+   "icon": "🧋",
+   "wholesale_price": 4.0,
+   "base_retail_price": 7.0,
+   "popularity": 75,
+   "shelf_life_days": 2,
+   "unlock_upgrade_id": "upg_level2",
+   "season_demand": {
+    "winter": 1.8
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "tissue",
+   "name": "纸巾",
+   "category": "日用品",
+   "icon": "🧻",
+   "wholesale_price": 2.5,
+   "base_retail_price": 4.0,
+   "popularity": 70,
+   "shelf_life_days": 365,
+   "unlock_upgrade_id": "upg_level3",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "detergent",
+   "name": "洗衣粉",
+   "category": "日用品",
+   "icon": "🧼",
+   "wholesale_price": 5.0,
+   "base_retail_price": 8.0,
+   "popularity": 60,
+   "shelf_life_days": 365,
+   "unlock_upgrade_id": "upg_level3",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "umbrella",
+   "name": "雨伞",
+   "category": "日用品",
+   "icon": "☂️",
+   "wholesale_price": 4.0,
+   "base_retail_price": 8.0,
+   "popularity": 55,
+   "shelf_life_days": 365,
+   "unlock_upgrade_id": "upg_level3",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "battery",
+   "name": "电池",
+   "category": "电子小件",
+   "icon": "🔋",
+   "wholesale_price": 4.0,
+   "base_retail_price": 7.0,
+   "popularity": 65,
+   "shelf_life_days": 365,
+   "unlock_upgrade_id": "upg_level4",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "charging_cable",
+   "name": "充电线",
+   "category": "电子小件",
+   "icon": "🔌",
+   "wholesale_price": 5.0,
+   "base_retail_price": 9.0,
+   "popularity": 60,
+   "shelf_life_days": 365,
+   "unlock_upgrade_id": "upg_level4",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "earphone",
+   "name": "耳机",
+   "category": "电子小件",
+   "icon": "🎧",
+   "wholesale_price": 6.0,
+   "base_retail_price": 10.0,
+   "popularity": 50,
+   "shelf_life_days": 365,
+   "unlock_upgrade_id": "upg_level4",
+   "season_demand": {},
+   "weather_demand": {}
+  },
+  {
+   "id": "craft_cola",
+   "name": "精酿气泡水",
+   "category": "饮料",
+   "icon": "🍹",
+   "wholesale_price": 8.0,
+   "base_retail_price": 18.0,
+   "popularity": 80,
+   "shelf_life_days": 45,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "summer": 1.6
+   },
+   "weather_demand": {}
+  },
+  {
+   "id": "craft_snack",
+   "name": "进口坚果礼盒",
+   "category": "零食",
+   "icon": "🥜",
+   "wholesale_price": 15.0,
+   "base_retail_price": 32.0,
+   "popularity": 70,
+   "shelf_life_days": 180,
+   "unlock_upgrade_id": null,
+   "season_demand": {
+    "winter": 1.4
+   },
+   "weather_demand": {}
+  }
+ ],
+ "npcs": [
+  {
+   "id": "npc_zhang",
+   "name": "张大爷",
+   "icon": "🧓",
+   "title": "退休大爷",
+   "personality": "节俭",
+   "visit_chance": 0.3,
+   "price_sensitivity": 0.9,
+   "period": "any",
+   "favorite_categories": [
+    "零食"
+   ],
+   "favorite_products": [
+    "instant_noodles",
+    "popsicle",
+    "baozi"
+   ],
+   "budget": 6.0,
+   "comments": {
+    "cold": [
+     "店里冷冷清清的。",
+     "东西不多啊。",
+     "这价……再便宜点呗？"
+    ],
+    "normal": [
+     "还行，凑合。",
+     "货比上次全了点。",
+     "老板，别老涨价啊。"
+    ],
+    "regular": [
+     "老地方了，每天来转转。",
+     "你家东西我信得过。",
+     "今天来包方便面！"
+    ],
+    "loyal": [
+     "这店就是我的第二个家！",
+     "老板实在，我帮你吆喝吆喝！",
+     "咱街坊就认你这儿！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "哟，我要的方便面又没货了？",
+     "老冰棍都没有，让我白跑一趟！",
+     "下次记得进包子啊！"
+    ]
+   }
+  },
+  {
+   "id": "npc_li",
+   "name": "李阿姨",
+   "icon": "👩",
+   "title": "隔壁邻居",
+   "personality": "热心",
+   "visit_chance": 0.25,
+   "price_sensitivity": 0.6,
+   "period": "any",
+   "favorite_categories": [
+    "日用品",
+    "饮料"
+   ],
+   "favorite_products": [
+    "tissue",
+    "detergent",
+    "milk"
+   ],
+   "budget": 15.0,
+   "comments": {
+    "cold": [
+     "路过看看，没啥想买的。",
+     "你这家店什么时候开起来的？"
+    ],
+    "normal": [
+     "东西还行，就是不太全。",
+     "下次帮我留两盒牛奶。"
+    ],
+    "regular": [
+     "阿姨常来，照顾你生意！",
+     "街坊们都夸你这店不错。"
+    ],
+    "loyal": [
+     "我逢人就推荐你家！",
+     "咱这条街就属你这店最像样！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "纸巾又卖完了？我家正缺呢！",
+     "牛奶没进吗？明天一定得进啊！"
+    ]
+   }
+  },
+  {
+   "id": "npc_wang",
+   "name": "王小明",
+   "icon": "🧒",
+   "title": "小学生",
+   "personality": "贪吃",
+   "visit_chance": 0.3,
+   "price_sensitivity": 0.7,
+   "period": "noon",
+   "favorite_categories": [
+    "零食",
+    "冰品"
+   ],
+   "favorite_products": [
+    "latiao",
+    "potato_chips",
+    "ice_cream",
+    "popsicle"
+   ],
+   "budget": 5.0,
+   "comments": {
+    "cold": [
+     "没啥好吃的……",
+     "老板，有没有新货？"
+    ],
+    "normal": [
+     "还行吧，买包辣条。",
+     "冰棍有没有？"
+    ],
+    "regular": [
+     "老板我来了！",
+     "同学都说你家好吃！"
+    ],
+    "loyal": [
+     "全班都来你家买东西！",
+     "老板你最好了！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "辣条又没了？！",
+     "冰激凌都没有，不开心！"
+    ]
+   }
+  },
+  {
+   "id": "npc_chen",
+   "name": "陈先生",
+   "icon": "🧑‍💼",
+   "title": "上班族",
+   "personality": "讲究",
+   "visit_chance": 0.22,
+   "price_sensitivity": 0.4,
+   "period": "evening",
+   "favorite_categories": [
+    "饮料",
+    "电子小件"
+   ],
+   "favorite_products": [
+    "coffee",
+    "charging_cable",
+    "battery"
+   ],
+   "budget": 20.0,
+   "comments": {
+    "cold": [
+     "店有点简陋啊。",
+     "东西看着不太上档次。"
+    ],
+    "normal": [
+     "还行，能买。",
+     "咖啡有吗？"
+    ],
+    "regular": [
+     "下班路过就来买杯咖啡。",
+     "你家货品越来越全了。"
+    ],
+    "loyal": [
+     "全公司都知道你这店了！",
+     "服务到位，价格也公道。"
+    ]
+   },
+   "special": {
+    "missing": [
+     "充电线没有？我手机正没电呢！",
+     "咖啡断货了？明天加班就靠它了！"
+    ]
+   }
+  },
+  {
+   "id": "npc_liu",
+   "name": "刘奶奶",
+   "icon": "👵",
+   "title": "老街坊",
+   "personality": "恋旧",
+   "visit_chance": 0.2,
+   "price_sensitivity": 0.85,
+   "period": "morning",
+   "favorite_categories": [
+    "熟食"
+   ],
+   "favorite_products": [
+    "baozi",
+    "sausage",
+    "milk_tea"
+   ],
+   "budget": 8.0,
+   "comments": {
+    "cold": [
+     "这店，看着不像以前那样了。",
+     "东西贵了，老太太买不起了。"
+    ],
+    "normal": [
+     "有包子吗？热乎的。",
+     "还行，人还实在。"
+    ],
+    "regular": [
+     "每天早上下楼就来你这儿。",
+     "你这家店越来越像样了。"
+    ],
+    "loyal": [
+     "老太太就认你这儿！",
+     "街坊邻居都夸你有出息！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "包子又卖完了？我还没吃早饭呢！",
+     "烤肠没有，那热奶茶呢？"
+    ]
+   }
+  },
+  {
+   "id": "npc_zhao",
+   "name": "赵师傅",
+   "icon": "🚕",
+   "title": "出租车司机",
+   "personality": "爽快",
+   "visit_chance": 0.25,
+   "price_sensitivity": 0.5,
+   "period": "evening",
+   "favorite_categories": [
+    "饮料",
+    "零食"
+   ],
+   "favorite_products": [
+    "mineral_water",
+    "instant_noodles",
+    "gum"
+   ],
+   "budget": 10.0,
+   "comments": {
+    "cold": [
+     "晚上买瓶水，凑合。",
+     "这店晚上看着有点暗。"
+    ],
+    "normal": [
+     "师傅，来瓶水。",
+     "行，东西还齐全。"
+    ],
+    "regular": [
+     "交班前必来你这儿！",
+     "你这店，夜猫子都知道。"
+    ],
+    "loyal": [
+     "我拉活都跟乘客推荐你这店！",
+     "老板爽快，够意思！"
+    ]
+   },
+   "special": {
+    "missing": [
+     "水都没了？我这嗓子快冒烟了！",
+     "方便面缺货？夜班就指望它了！"
+    ]
+   }
+  }
+ ],
+ "upgrades": [
+  {
+   "id": "upg_level2",
+   "name": "粉刷门面",
+   "icon": "🎨",
+   "level": 2,
+   "cost": 800.0,
+   "description": "重新粉刷门面、摆上几盆绿植，小店精神多了。",
+   "foot_traffic_bonus": 0.2,
+   "max_customers_bonus": 0,
+   "reputation_bonus": 2,
+   "unlock_categories": [
+    "熟食"
+   ],
+   "auto_reputation_per_day": 0.0
+  },
+  {
+   "id": "upg_level3",
+   "name": "扩充货架",
+   "icon": "🗄️",
+   "level": 3,
+   "cost": 1500.0,
+   "description": "新增两组货架，能摆下更多种类的商品。",
+   "foot_traffic_bonus": 0.2,
+   "max_customers_bonus": 10,
+   "reputation_bonus": 3,
+   "unlock_categories": [
+    "日用品"
+   ],
+   "auto_reputation_per_day": 0.0
+  },
+  {
+   "id": "upg_level4",
+   "name": "霓虹招牌",
+   "icon": "💡",
+   "level": 4,
+   "cost": 2500.0,
+   "description": "装上一块亮眼的霓虹招牌，晚上远远就能看见。",
+   "foot_traffic_bonus": 0.25,
+   "max_customers_bonus": 10,
+   "reputation_bonus": 4,
+   "unlock_categories": [
+    "电子小件"
+   ],
+   "auto_reputation_per_day": 0.2
+  },
+  {
+   "id": "upg_level5",
+   "name": "旗舰店面",
+   "icon": "🏬",
+   "level": 5,
+   "cost": 4000.0,
+   "description": "全面翻新：亮堂的灯光、整齐的陈列、干净的柜台，街角最靓的店。",
+   "foot_traffic_bonus": 0.35,
+   "max_customers_bonus": 15,
+   "reputation_bonus": 5,
+   "unlock_categories": [],
+   "auto_reputation_per_day": 0.5
+  }
+ ],
+ "loans": [
+  {
+   "id": "loan_small",
+   "name": "小额周转贷",
+   "icon": "💰",
+   "max_amount": 1000.0,
+   "monthly_rate": 0.08,
+   "description": "救急不救穷。额度 1,000 元，月利率 8%，按游戏日实时计息。"
+  },
+  {
+   "id": "loan_growth",
+   "name": "创业发展贷",
+   "icon": "🏦",
+   "max_amount": 3000.0,
+   "monthly_rate": 0.06,
+   "description": "适合扩大经营。额度 3,000 元，月利率 6%，按游戏日实时计息。"
+  },
+  {
+   "id": "loan_big",
+   "name": "扩建大额贷",
+   "icon": "🏗️",
+   "max_amount": 6000.0,
+   "monthly_rate": 0.045,
+   "description": "大额低息，用于旗舰装修。额度 6,000 元，月利率 4.5%，按游戏日实时计息。"
+  }
+ ],
+ "events": [
+  {
+   "id": "ev_crowd",
+   "name": "顾客爆满",
+   "icon": "🎉",
+   "chance": 0.08,
+   "flavor": "附近公司提前下班，街上一下子热闹起来！",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 8,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_supplier",
+   "name": "供应商特惠",
+   "icon": "📦",
+   "chance": 0.06,
+   "flavor": "批发商急着清库存，进货打了七折！",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 0.7,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_thief",
+   "name": "小偷光顾",
+   "icon": "🕵️",
+   "chance": 0.03,
+   "flavor": "一不留神，收银台的钱少了……",
+   "cash_delta_min": -80.0,
+   "cash_delta_max": -200.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_powerout",
+   "name": "突发停电",
+   "icon": "⚡",
+   "chance": 0.04,
+   "flavor": "片区停电，冰柜里的东西只能抢着卖。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 0.4,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_gossip",
+   "name": "口碑发酵",
+   "icon": "📣",
+   "chance": 0.05,
+   "flavor": "街坊们在群里夸你这店货真价实。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 4,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_roadwork",
+   "name": "街道施工",
+   "icon": "🚧",
+   "chance": 0.05,
+   "flavor": "门口修路，行人绕道，生意冷清了两天。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 0.6,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 2
+  },
+  {
+   "id": "ev_help",
+   "name": "帮小孩找家长",
+   "icon": "🧒",
+   "chance": 0.02,
+   "flavor": "有个迷路的小孩在店门口哭，你帮他找到了妈妈。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 6,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  },
+  {
+   "id": "ev_hotpromo",
+   "name": "促销潮",
+   "icon": "🛍️",
+   "chance": 0.07,
+   "flavor": "对面广场搞活动，人流涌进小店。",
+   "cash_delta_min": 0.0,
+   "cash_delta_max": 0.0,
+   "reputation_delta": 0,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.5,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 1
+  },
+  {
+   "id": "ev_oldfriend",
+   "name": "老友探望",
+   "icon": "🤝",
+   "chance": 0.03,
+   "flavor": "多年老友路过，硬塞给你一笔钱说算入股。",
+   "cash_delta_min": 100.0,
+   "cash_delta_max": 300.0,
+   "reputation_delta": 1,
+   "foot_traffic_flat": 0,
+   "foot_traffic_mod": 1.0,
+   "sales_mod": 1.0,
+   "restock_discount": 1.0,
+   "buff_days": 0
+  }
+ ],
+ "win": {
+  "type": "networth",
+  "target_net_worth": 8000.0,
+  "by_year": 2
+ },
+ "lose": {
+  "type": "bankruptcy",
+  "debt_limit": 15000.0,
+  "grace_days": 7
+ },
+ "gameplay": {
+  "daily_briefs": [
+   {
+    "id": "b_community",
+    "icon": "🏮",
+    "title": "社区活动日",
+    "flavor": "街心公园办市集，人潮涌动",
+    "foot_traffic_mod": 1.2,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 2.0
+   },
+   {
+    "id": "b_festival",
+    "icon": "🛍",
+    "title": "消费节",
+    "flavor": "全民购物狂欢，出手大方",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.15,
+    "restock_discount": 1.0,
+    "weight": 1.6
+   },
+   {
+    "id": "b_supplier",
+    "icon": "📦",
+    "title": "供应商让利",
+    "flavor": "批发商月初清仓，进货打九折",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.0,
+    "restock_discount": 0.9,
+    "weight": 1.6
+   },
+   {
+    "id": "b_rain",
+    "icon": "🌧",
+    "title": "大雨预警",
+    "flavor": "暴雨将至，出门的人少了",
+    "foot_traffic_mod": 0.85,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 1.4
+   },
+   {
+    "id": "b_check",
+    "icon": "📋",
+    "title": "卫生抽查",
+    "flavor": "今天有检查，保持货架整洁",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 1.2
+   },
+   {
+    "id": "b_plain",
+    "icon": "☕",
+    "title": "平淡的一天",
+    "flavor": "和往常一样，按部就班就好",
+    "foot_traffic_mod": 1.0,
+    "sales_mod": 1.0,
+    "restock_discount": 1.0,
+    "weight": 2.2
+   }
+  ],
+  "promo": {
+   "cost": 200.0,
+   "duration_min": 240,
+   "traffic_mult": 1.5
+  },
+  "hot_item": {
+   "chance": 0.35,
+   "duration_min": 180,
+   "demand_mult": 2.5
+  },
+  "social": {
+   "chat": {
+    "name": "闲聊",
+    "icon": "💬",
+    "cost": 0,
+    "favor": 1,
+    "rep": 0,
+    "cooldown_min": 30,
+    "flavor": "你和大爷大妈聊了会家常"
+   },
+   "gift": {
+    "name": "送小礼",
+    "icon": "🎁",
+    "cost": 50,
+    "favor": 4,
+    "rep": 1,
+    "cooldown_min": 120,
+    "flavor": "你送了份小礼物"
+   },
+   "tea": {
+    "name": "请喝茶",
+    "icon": "🍵",
+    "cost": 30,
+    "favor": 3,
+    "rep": 1,
+    "cooldown_min": 90,
+    "flavor": "你请街坊喝了杯热茶"
+   }
+  },
+  "trade": {
+   "wholesale": {
+    "enabled": true,
+    "min_qty": 50,
+    "price_ratio": 0.75,
+    "cooldown_min": 60,
+    "broker_name": "王老板"
+   },
+   "delivery": {
+    "enabled": false,
+    "setup_cost": 0,
+    "orders_min": 5,
+    "orders_max": 5,
+    "price_ratio": 0.8,
+    "traffic_penalty": 0.15,
+    "review_chance": 0.1
+   }
+  },
+  "staff": {
+   "pay_interval_days": 30,
+   "roles": {
+    "assistant": {
+     "id": "assistant",
+     "name": "店员小周",
+     "icon": "👩‍💼",
+     "role": "auto_buy",
+     "salary": 400,
+     "desc": "每日清晨自动进货：把解锁商品补到 30 件（花费上限现金 30%，保底留 300）。效率越高补得越足。",
+     "auto_buy": {
+      "target_qty": 30,
+      "max_spend_ratio": 0.3,
+      "min_cash_keep": 300
+     },
+     "skills": [
+      {
+       "id": "sk_stock_master",
+       "name": "库存妙手",
+       "icon": "📦",
+       "desc": "清晨自动补货数量 +10",
+       "params": {
+        "auto_buy_bonus": 10
+       }
+      },
+      {
+       "id": "sk_smile_service",
+       "name": "微笑服务",
+       "icon": "😊",
+       "desc": "客单价 +2%（顾客更愿买单）",
+       "params": {
+        "price_bonus": 0.02
+       }
+      }
+     ]
+    },
+    "promoter": {
+     "id": "promoter",
+     "name": "促销员阿美",
+     "icon": "📣",
+     "role": "promoter",
+     "salary": 500,
+     "desc": "门口揽客吆喝，客流 +6%/级效率。涨薪越高兴，嗓门越大。",
+     "params": {
+      "foot_traffic": 0.06
+     },
+     "skills": [
+      {
+       "id": "sk_traffic_code",
+       "name": "流量密码",
+       "icon": "📈",
+       "desc": "客流 +3%",
+       "params": {
+        "traffic_bonus": 0.03
+       }
+      },
+      {
+       "id": "sk_eloquent",
+       "name": "口才了得",
+       "icon": "🗣",
+       "desc": "客单价 +2%",
+       "params": {
+        "price_bonus": 0.02
+       }
+      }
+     ]
+    },
+    "buyer": {
+     "id": "buyer",
+     "name": "采购员老陈",
+     "icon": "🧾",
+     "role": "buyer",
+     "salary": 450,
+     "desc": "进货让价 8%/级效率（最多打到 8 折）。供货商都怕他砍价。",
+     "params": {
+      "buy_discount": 0.08
+     },
+     "skills": [
+      {
+       "id": "sk_bargain",
+       "name": "砍价大师",
+       "icon": "🪓",
+       "desc": "进货再让价 3%",
+       "params": {
+        "discount_bonus": 0.03
+       }
+      },
+      {
+       "id": "sk_channel",
+       "name": "渠道熟客",
+       "icon": "🤝",
+       "desc": "清晨自动补货数量 +8",
+       "params": {
+        "auto_buy_bonus": 8
+       }
+      }
+     ]
+    },
+    "guard": {
+     "id": "guard",
+     "name": "守夜人阿龙",
+     "icon": "🔦",
+     "role": "guard",
+     "salary": 350,
+     "desc": "夜间巡逻看店，小偷事件概率减半（强度 50%）。",
+     "suppress_events": [
+      "ev_thief"
+     ],
+     "params": {
+      "suppress_strength": 0.5
+     },
+     "skills": [
+      {
+       "id": "sk_eyes",
+       "name": "火眼金睛",
+       "icon": "👀",
+       "desc": "小偷/事件抑制额外 +30%",
+       "params": {
+        "suppress_bonus": 0.3
+       }
+      },
+      {
+       "id": "sk_night_patrol",
+       "name": "夜巡达人",
+       "icon": "🌙",
+       "desc": "客流 +2%",
+       "params": {
+        "traffic_bonus": 0.02
+       }
+      }
+     ]
+    },
+    "restocker": {
+     "name": "仓管小刘",
+     "icon": "📦",
+     "role": "realtime_restock",
+     "salary": 600,
+     "desc": "实时盯着货架：任何商品一卖断货立即补上 10 件（花店铺的钱进批发价），效率越高补得越快越便宜。",
+     "autoBuy": {
+      "target_qty": 10,
+      "max_spend_ratio": 0.6,
+      "min_cash_keep": 200
+     },
+     "skills": [
+      {
+       "id": "sk_flash_stock",
+       "name": "闪电补货",
+       "icon": "⚡",
+       "desc": "实时补货数量 +5",
+       "params": {
+        "stock_bonus": 5
+       }
+      },
+      {
+       "id": "sk_frugal",
+       "name": "精打细算",
+       "icon": "🧮",
+       "desc": "进货再让价 3%",
+       "params": {
+        "discount_bonus": 0.03
+       }
+      }
+     ]
+    }
+   },
+   "career": {
+    "enabled": true,
+    "exp_per_day": 5,
+    "exp_per_action": 1,
+    "level_threshold": 50,
+    "promote_cost_mult": 3.0,
+    "redpacket_cost": 200.0,
+    "loyalty_per_pay": 5,
+    "loyalty_per_raise": 8,
+    "loyalty_per_cut": -10,
+    "loyalty_promote_cost": 10.0
+   }
+  },
+  "quest": {
+   "chance": 0.6,
+   "days": 2,
+   "qty_min": 5,
+   "qty_max": 15,
+   "reward_ratio": 1.35
+  },
+  "lottery": {
+   "cost": 10,
+   "win_chance": 0.08,
+   "prize_min": 60,
+   "prize_max": 200,
+   "scratch_cost": 5,
+   "scratch_win_chance": 0.25,
+   "scratch_prize_min": 2,
+   "scratch_prize_max": 50
+  },
+  "map": {
+   "start_location_id": "hutong",
+   "locations": [
+    {
+     "id": "hutong",
+     "name": "胡同口小卖部",
+     "icon": "🏘️",
+     "desc": "老胡同深处的小卖部，街坊熟客多但人流有限。初始地产。",
+     "traffic_bonus": 1.0,
+     "price": 0,
+     "down_payment_ratio": 0,
+     "unlock_reputation": 0
+    },
+    {
+     "id": "jiejiao",
+     "name": "街角铺面",
+     "icon": "🏪",
+     "desc": "十字街口转角铺面，人流明显增多，招牌上还带小院子。",
+     "traffic_bonus": 1.25,
+     "price": 6000,
+     "down_payment_ratio": 0.4,
+     "unlock_reputation": 30
+    },
+    {
+     "id": "shangyejie",
+     "name": "商业街旺铺",
+     "icon": "🏬",
+     "desc": "商业街正门面，客流是胡同的两倍不止，租金跟着水涨船高。",
+     "traffic_bonus": 1.55,
+     "price": 18000,
+     "down_payment_ratio": 0.35,
+     "unlock_reputation": 60
+    },
+    {
+     "id": "zhongxin",
+     "name": "中心广场旗舰",
+     "icon": "🏢",
+     "desc": "城市中心广场旗舰店，昼夜人流不断——小镇最贵的门面。",
+     "traffic_bonus": 1.9,
+     "price": 45000,
+     "down_payment_ratio": 0.3,
+     "unlock_reputation": 80
+    }
+   ],
+   "loan": {
+    "months": 12,
+    "monthly_rate": 0.02
+   }
+  },
+  "wardrobe": {
+   "slots": [
+    "hat",
+    "top",
+    "pants",
+    "watch",
+    "shoes"
+   ],
+   "items": [
+    {
+     "id": "hat_plain",
+     "name": "棉布帽",
+     "brand": "街坊工坊",
+     "icon": "🧢",
+     "slot": "hat",
+     "price": 80,
+     "prestige": 2,
+     "desc": "朴实耐用，街坊都认得这顶帽子。"
+    },
+    {
+     "id": "hat_cap",
+     "name": "潮款鸭舌帽",
+     "brand": "小林制衣",
+     "icon": "🧢",
+     "slot": "hat",
+     "price": 300,
+     "prestige": 6,
+     "desc": "限量配色，年轻人都在追。"
+    },
+    {
+     "id": "hat_top",
+     "name": "高顶礼帽",
+     "brand": "奥罗拉",
+     "icon": "🎩",
+     "slot": "hat",
+     "price": 1200,
+     "prestige": 15,
+     "desc": "一顶礼帽，半条街的目光。"
+    },
+    {
+     "id": "top_tee",
+     "name": "棉质T恤",
+     "brand": "街坊工坊",
+     "icon": "👕",
+     "slot": "top",
+     "price": 100,
+     "prestige": 2,
+     "desc": "纯棉透气，干活利索。"
+    },
+    {
+     "id": "top_jacket",
+     "name": "皮夹克",
+     "brand": "小林制衣",
+     "icon": "🧥",
+     "slot": "top",
+     "price": 400,
+     "prestige": 8,
+     "desc": "一身皮衣，气场两米八。"
+    },
+    {
+     "id": "top_suit",
+     "name": "定制西装",
+     "brand": "菲尼克斯",
+     "icon": "🤵",
+     "slot": "top",
+     "price": 2000,
+     "prestige": 20,
+     "desc": "量体裁剪，见客谈生意必备。"
+    },
+    {
+     "id": "pants_jean",
+     "name": "牛仔裤",
+     "brand": "街坊工坊",
+     "icon": "👖",
+     "slot": "pants",
+     "price": 120,
+     "prestige": 2,
+     "desc": "耐磨耐脏，干活首选。"
+    },
+    {
+     "id": "pants_slack",
+     "name": "休闲西裤",
+     "brand": "小林制衣",
+     "icon": "👖",
+     "slot": "pants",
+     "price": 350,
+     "prestige": 6,
+     "desc": "有型不紧绷，日常体面。"
+    },
+    {
+     "id": "pants_tailor",
+     "name": "高级定制西裤",
+     "brand": "菲尼克斯",
+     "icon": "👖",
+     "slot": "pants",
+     "price": 1500,
+     "prestige": 15,
+     "desc": "裤线笔直如刀，走路带风。"
+    },
+    {
+     "id": "watch_digi",
+     "name": "电子表",
+     "brand": "街坊工坊",
+     "icon": "⌚",
+     "slot": "watch",
+     "price": 60,
+     "prestige": 1,
+     "desc": "准时耐用，看时间就够。"
+    },
+    {
+     "id": "watch_steel",
+     "name": "钢带腕表",
+     "brand": "时代表行",
+     "icon": "⌚",
+     "slot": "watch",
+     "price": 500,
+     "prestige": 8,
+     "desc": "钢带沉手，谈生意有底气。"
+    },
+    {
+     "id": "watch_lux",
+     "name": "机械名表",
+     "brand": "时代表行",
+     "icon": "⌚",
+     "slot": "watch",
+     "price": 5000,
+     "prestige": 30,
+     "desc": "自动上链，戴的是排面。"
+    },
+    {
+     "id": "shoes_canvas",
+     "name": "帆布鞋",
+     "brand": "街坊工坊",
+     "icon": "👟",
+     "slot": "shoes",
+     "price": 90,
+     "prestige": 2,
+     "desc": "轻便随脚，走街串巷。"
+    },
+    {
+     "id": "shoes_leather",
+     "name": "商务皮鞋",
+     "brand": "小林制衣",
+     "icon": "🥾",
+     "slot": "shoes",
+     "price": 450,
+     "prestige": 7,
+     "desc": "擦得锃亮，进退有度。"
+    },
+    {
+     "id": "shoes_handmade",
+     "name": "手工定制皮鞋",
+     "brand": "菲尼克斯",
+     "icon": "👞",
+     "slot": "shoes",
+     "price": 2200,
+     "prestige": 18,
+     "desc": "一针一线手工缝制，踩得出身份。"
+    }
+   ]
+  },
+  "assets": [
+   {
+    "id": "asset_bike",
+    "name": "凤凰自行车",
+    "icon": "🚲",
+    "category": "vehicle",
+    "price": 400,
+    "prestige": 5,
+    "desc": "代步够用，进货方便。"
+   },
+   {
+    "id": "asset_ebike",
+    "name": "电动车",
+    "icon": "🛵",
+    "category": "vehicle",
+    "price": 2000,
+    "prestige": 12,
+    "desc": "风里来雨里去，从不迟到。"
+   },
+   {
+    "id": "asset_car",
+    "name": "小轿车",
+    "icon": "🚗",
+    "category": "vehicle",
+    "price": 20000,
+    "prestige": 40,
+    "desc": "体面出行，谈合作不掉价。"
+   },
+   {
+    "id": "asset_luxcar",
+    "name": "商务豪车",
+    "icon": "🚘",
+    "category": "vehicle",
+    "price": 80000,
+    "prestige": 100,
+    "desc": "停在店门口就是招牌。"
+   },
+   {
+    "id": "asset_houselaoren",
+    "name": "老宅院",
+    "icon": "🏡",
+    "category": "house",
+    "price": 30000,
+    "prestige": 60,
+    "desc": "青砖老院，根在街坊。"
+   },
+   {
+    "id": "asset_apt",
+    "name": "临街公寓",
+    "icon": "🏢",
+    "category": "house",
+    "price": 60000,
+    "prestige": 110,
+    "desc": "窗明几净，站在阳台看整条街。"
+   },
+   {
+    "id": "asset_manor",
+    "name": "庄园别墅",
+    "icon": "🏰",
+    "category": "house",
+    "price": 200000,
+    "prestige": 300,
+    "desc": "小镇最气派的宅子，传奇的起点。"
+   }
+  ],
+  "finance": [
+   {
+    "id": "fin_quick",
+    "name": "灵动宝",
+    "icon": "⚡",
+    "period_days": 30,
+    "annual_rate": 0.14,
+    "min_amount": 300,
+    "desc": "30 天短锁定期，年化 14%，随买随兑的入门理财。"
+   },
+   {
+    "id": "fin_steady",
+    "name": "稳健盈",
+    "icon": "🏦",
+    "period_days": 90,
+    "annual_rate": 0.18,
+    "min_amount": 1500,
+    "desc": "90 天锁定期，年化 18%，小卖部攒钱进阶之选。"
+   },
+   {
+    "id": "fin_long",
+    "name": "长盈计划",
+    "icon": "🌳",
+    "period_days": 180,
+    "annual_rate": 0.22,
+    "min_amount": 5000,
+    "desc": "180 天长线理财，年化 22%，收益可观但要耐得住性子。"
+   }
+  ],
+  "branching": {
+   "enabled": true,
+   "max_shops": 4,
+   "base_open_cost": 2000,
+   "cost_growth": 1.6,
+   "require_reputation": 20
+  },
+  "supply": {
+   "enabled": true,
+   "supplier_name": "恒昌商贸行",
+   "tiers": [
+    {
+     "name": "普通客户",
+     "req_points": 0,
+     "discount": 1.0,
+     "credit_limit": 0
+    },
+    {
+     "name": "稳定客户",
+     "req_points": 500,
+     "discount": 0.98,
+     "credit_limit": 0
+    },
+    {
+     "name": "金牌客户",
+     "req_points": 2000,
+     "discount": 0.95,
+     "credit_limit": 1000
+    },
+    {
+     "name": "战略伙伴",
+     "req_points": 6000,
+     "discount": 0.88,
+     "credit_limit": 3000
+    }
+   ],
+   "exclusive_products": [
+    "craft_cola",
+    "craft_snack"
+   ],
+   "credit_term_min": 43200
+  },
+  "competition": {
+   "enabled": true,
+   "threshold_reputation": 40,
+   "max_competitors": 2,
+   "pool": [
+    {
+     "id": "wang_store",
+     "name": "老王便利店",
+     "icon": "🏪",
+     "strength": 1.0
+    },
+    {
+     "id": "chen_shop",
+     "name": "晨光小卖部",
+     "icon": "🏬",
+     "strength": 1.1
+    }
+   ],
+   "ad_cost": 300,
+   "charm_cost": 200
+  },
+  "festival": {
+   "enabled": true,
+   "prep_window_min": 1440,
+   "festivals": [
+    {
+     "id": "spring_fair",
+     "name": "新春庙会",
+     "icon": "🏮",
+     "season": "spring",
+     "day": 1,
+     "duration_min": 1440,
+     "demand": {
+      "cola": 2.0,
+      "potato_chips": 1.8,
+      "cookies": 1.8,
+      "gum": 1.5
+     },
+     "setup_cap": 800,
+     "reward_mult": 1.6,
+     "event_rate": 0.12
+    },
+    {
+     "id": "summer_ice",
+     "name": "夏日冰爽节",
+     "icon": "🍧",
+     "season": "summer",
+     "day": 4,
+     "duration_min": 1440,
+     "demand": {
+      "ice_cream": 2.2,
+      "popsicle": 2.2,
+      "sprite": 1.8,
+      "milk_tea": 1.6
+     },
+     "setup_cap": 1000,
+     "reward_mult": 1.6,
+     "event_rate": 0.12
+    },
+    {
+     "id": "autumn_harvest",
+     "name": "金秋丰收节",
+     "icon": "🌾",
+     "season": "autumn",
+     "day": 4,
+     "duration_min": 1440,
+     "demand": {
+      "latiao": 1.8,
+      "sausage": 1.8,
+      "chocolate": 1.6
+     },
+     "setup_cap": 1000,
+     "reward_mult": 1.6,
+     "event_rate": 0.12
+    },
+    {
+     "id": "winter_goods",
+     "name": "暖冬年货节",
+     "icon": "🧣",
+     "season": "winter",
+     "day": 6,
+     "duration_min": 1440,
+     "demand": {
+      "baozi": 2.0,
+      "instant_noodles": 1.8,
+      "coffee": 1.8,
+      "milk": 1.5
+     },
+     "setup_cap": 1200,
+     "reward_mult": 1.7,
+     "event_rate": 0.12
+    }
+   ]
+  }
+ },
+ "achievements": [
+  {
+   "id": "first_sale",
+   "icon": "🛒",
+   "name": "初试牛刀",
+   "desc": "卖出第一件商品",
+   "type": "first_sale",
+   "value": 1
+  },
+  {
+   "id": "revenue_300",
+   "icon": "💰",
+   "name": "日进斗金",
+   "desc": "单日营业额达到 300 元",
+   "type": "revenue_day",
+   "value": 300
+  },
+  {
+   "id": "profit_3",
+   "icon": "📈",
+   "name": "三连胜",
+   "desc": "连续 3 天盈利",
+   "type": "profit_streak",
+   "value": 3
+  },
+  {
+   "id": "favor_60",
+   "icon": "🤝",
+   "name": "街坊知己",
+   "desc": "任意一位街坊好感达到 60",
+   "type": "favor_any",
+   "value": 60
+  },
+  {
+   "id": "rep_50",
+   "icon": "⭐",
+   "name": "名声在外",
+   "desc": "声誉达到 50",
+   "type": "reputation",
+   "value": 50
+  },
+  {
+   "id": "upgrade_2",
+   "icon": "🔨",
+   "name": "装修达人",
+   "desc": "完成 2 次装修",
+   "type": "upgrades",
+   "value": 2
+  },
+  {
+   "id": "debt_clear",
+   "icon": "🧾",
+   "name": "无债一身轻",
+   "desc": "还清全部贷款",
+   "type": "debt_clear",
+   "value": 0
+  },
+  {
+   "id": "net_worth_3000",
+   "icon": "🏦",
+   "name": "小有家产",
+   "desc": "净资产达到 3,000 元",
+   "type": "net_worth",
+   "value": 3000
+  },
+  {
+   "id": "hot_2",
+   "icon": "🔥",
+   "name": "爆款操盘手",
+   "desc": "经历 2 次爆款热卖",
+   "type": "hot_count",
+   "value": 2
+  },
+  {
+   "id": "day_14",
+   "icon": "🗓",
+   "name": "老店主",
+   "desc": "累计经营满 14 天",
+   "type": "days",
+   "value": 14
+  },
+  {
+   "id": "staff_2",
+   "icon": "👥",
+   "name": "团队雏形",
+   "desc": "同时雇佣 2 名员工",
+   "type": "staff_count",
+   "value": 2
+  },
+  {
+   "id": "bank_interest_100",
+   "type": "bank_interest",
+   "value": 100,
+   "icon": "🏦",
+   "name": "钱生钱",
+   "desc": "累计获得 100 元存款利息"
+  },
+  {
+   "id": "quest_5",
+   "type": "quest_done",
+   "value": 5,
+   "icon": "📦",
+   "name": "有求必应",
+   "desc": "完成 5 单街坊委托"
+  },
+  {
+   "id": "relocate_1",
+   "type": "relocate",
+   "value": 1,
+   "icon": "🏠",
+   "name": "乔迁之喜",
+   "desc": "购买并迁移到第一处新地产"
+  },
+  {
+   "id": "prestige_50",
+   "type": "prestige",
+   "value": 50,
+   "icon": "🧍",
+   "name": "衣着光鲜",
+   "desc": "个人声望达到 50（装扮 + 资产）"
+  },
+  {
+   "id": "asset_1",
+   "type": "asset",
+   "value": 1,
+   "icon": "🚗",
+   "name": "有车有房",
+   "desc": "购置第一件个人资产"
+  },
+  {
+   "id": "supply_top",
+   "type": "supply_max_tier",
+   "value": 1,
+   "icon": "🤝",
+   "name": "战略伙伴",
+   "desc": "与供应商达成战略合作，解锁独家商品"
+  },
+  {
+   "id": "rating_star",
+   "type": "rating_tier",
+   "value": 3,
+   "icon": "🏅",
+   "name": "口碑之星",
+   "desc": "月度口碑评级达到「街区标杆」"
+  },
+  {
+   "id": "beat_rival",
+   "type": "competitor_closed",
+   "value": 1,
+   "icon": "🏁",
+   "name": "街区称霸",
+   "desc": "把一家竞争对手打到歇业"
+  },
+  {
+   "id": "festival_first",
+   "icon": "🎊",
+   "name": "开门红",
+   "desc": "庆祝第一个节日",
+   "type": "festival_count",
+   "value": 1
+  },
+  {
+   "id": "festival_master",
+   "icon": "🏮",
+   "name": "节日操盘手",
+   "desc": "单场节日战报累计奖金达 2,000 元",
+   "type": "festival_bonus",
+   "value": 2000
+  },
+  {
+   "id": "staff_promote",
+   "icon": "🎓",
+   "name": "骨干团队",
+   "desc": "晋升第一位骨干员工",
+   "type": "staff_promote",
+   "value": 0
+  }
+ ]
+}
